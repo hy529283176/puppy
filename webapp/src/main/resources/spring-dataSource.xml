@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress ALL -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:data-jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/data/jpa
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+        ">
+    <!-- 资源文件中包含变量信息，必须在Spring配置文件的最前面加载 -->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>classpath:config.properties</value>
+        </property>
+    </bean>
+
+    <!-- 数据库连接池 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.user}" />
+        <property name="password" value="${jdbc.pass}" />
+        <property name="maxActive" value="${jdbc.maxActive}" />
+        <property name="maxIdle" value="${jdbc.maxIdle}" />
+        <property name="maxWait" value="${jdbc.maxWait}" />
+        <property name="defaultAutoCommit" value="${jdbc.defaultAutoCommit}" />
+        <property name="defaultReadOnly" value="${jdbc.defaultReadOnly}" />
+        <property name="testOnBorrow" value="${jdbc.testOnBorrow}"/>
+        <property name="validationQuery" value="${jdbc.validationQuery}"/>
+    </bean>
+
+    <!-- 实体管理器 -->
+    <bean id="entityManager"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="jpaVendorAdapter">
+            <bean
+                    class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="generateDdl" value="false" />
+                <property name="database" value="MYSQL" />
+                <property name="databasePlatform" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+            </bean>
+        </property>
+        <property name="packagesToScan" value="com.fading.puppy.entity" />
+        <property name="persistenceProvider">
+            <bean class="org.hibernate.ejb.HibernatePersistence" />
+        </property>
+        <property name="sharedCacheMode" value="ENABLE_SELECTIVE" />
+        <property name="validationMode" value="NONE" />
+        <property name="jpaDialect">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+        </property>
+        <property name="jpaPropertyMap">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.region.factory_class">
+                    org.hibernate.cache.ehcache.EhCacheRegionFactory
+                </prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 支持注解方式声明式事务 -->
+    <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true" />
+    <bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <constructor-arg ref="entityManager" />
+    </bean>
+
+    <!-- dao -->
+    <data-jpa:repositories base-package="com.fading.puppy.dao" repository-impl-postfix="Impl"
+                           transaction-manager-ref="txManager" entity-manager-factory-ref="entityManager" />
+
+    <!--&lt;!&ndash; 事务 &ndash;&gt;-->
+    <!--<tx:advice id="txAdvice" transaction-manager="txManager">-->
+        <!--<tx:attributes>-->
+            <!--<tx:method name="*" />-->
+            <!--<tx:method name="get*" read-only="true" />-->
+            <!--<tx:method name="find*" read-only="true" />-->
+            <!--<tx:method name="select*" read-only="true" />-->
+            <!--<tx:method name="delete*" propagation="REQUIRED" />-->
+            <!--<tx:method name="update*" propagation="REQUIRED" />-->
+            <!--<tx:method name="add*" propagation="REQUIRED" />-->
+            <!--<tx:method name="insert*" propagation="REQUIRED" />-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
+    <!--&lt;!&ndash; 事务入口 &ndash;&gt;-->
+    <!--<aop:config>-->
+        <!--<aop:pointcut id="allServiceMethod" expression="execution(* com.fading.puppy.service.*.*(..))" />-->
+        <!--<aop:advisor pointcut-ref="allServiceMethod" advice-ref="txAdvice" />-->
+    <!--</aop:config>-->
+
+</beans>

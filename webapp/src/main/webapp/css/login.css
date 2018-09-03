@@ -1,0 +1,82 @@
+.app_content{
+				margin: auto;
+				width: 100%;
+				height: auto;
+				padding-top:60px ;
+				background-color: rgba(178,242,214,0.4);
+			}
+			.app_header{
+				margin: auto;
+				width: 100%;
+				height: 100px;
+				background-color: rgba(196,199,215,1);
+			}
+			.app_footer{
+				width: 100%;
+				height: 50px;
+				background-color: rgba(173,199,247,1);
+				bottom: 0;
+				position: fixed;
+				margin: auto;
+			}
+			#app_div{
+				margin: 0;
+				padding: 0;
+				width: auto;
+			}
+			body{
+				margin: 0;
+				padding: 0;
+			}
+			.copy_right{
+				width: 200px;
+				height: 30px;
+				margin: auto ;
+				margin-top: 15px;				
+			}
+			.banner{
+				background-image: url(../img/banner.png);
+				width: 1366px;
+				height: 100px;
+				margin: auto;
+			}
+			.app_content_login{
+				margin: auto;
+				width: 350px;
+				height: 300px;
+				background-color: rgba(178,242,214,1);
+				border-radius: 10px;
+				padding-top: 50px;
+			}
+			.userico{
+				width: 80px;
+				height: 80px;
+				border-radius: 50px;
+				margin:auto;
+			}
+			.userCSS{
+				width: 255px;
+				height: 40px;
+				background-color: #FFFFFF;
+				border-radius: 5px;
+				margin:20px auto;
+				padding-left: 4px;
+			}
+			
+			img{
+				float: left;
+				padding-top:2px ;
+			}
+			input{
+				float: right;
+				height: 35px;
+				width: 200px;
+				border: none;
+			}
+			#login_btn{
+				height: 40px;
+				width: 260px;
+				background-color: aqua;
+				font-family: "微软雅黑";
+				font-size: 24px;
+			}

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration>
+	<!-- Linux: /usr/ibase/logs
+		 Windows: D:/ibase/logs -->
+	<property name="logRoot" value="D:/ibase/logs" />
+	<property name="logModule" value="administrativedivisions" />
+  <property resource="config.properties" />  
+  <appender name="INVOKELOG"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+      <evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+        <marker>INVOKE</marker>
+      </evaluator>
+      <OnMismatch>DENY</OnMismatch>
+      <OnMatch>NEUTRAL</OnMatch>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${logRoot}/${logModule}/invokeLog/%d{yyyy-MM-dd}.log</fileNamePattern>
+    </rollingPolicy>
+    <encoder>
+       <pattern>%d{yyyy-MM-dd HH:mm:ss.SSSS} [requestUrl: %X{REQUESTURI}] [methodName: %X{MNAME}] [args: %X{ARGS}] [userId: %X{UID}] [ip: %X{CLIENTID}] [%thread] %logger - %msg%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="EXECSQLOG"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+      <evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+        <marker>SQL</marker>
+      </evaluator>
+      <OnMismatch>DENY</OnMismatch>
+      <OnMatch>NEUTRAL</OnMatch>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${logRoot}/${logModule}/execsqlLog/%d{yyyy-MM-dd}.log</fileNamePattern>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSSS} [methodName: %X{MNAME}] [args: %X{ARGS}] [sql: %X{SQL}] [table: %X{TABLE}] [userId: %X{UID}] [ip: %X{CLIENTID}] [%thread] %logger - %msg%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="EXCEPTIONLOG"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+      <evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+        <marker>EXCEPTION</marker>
+      </evaluator>
+      <OnMismatch>DENY</OnMismatch>
+      <OnMatch>NEUTRAL</OnMatch>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${logRoot}/${logModule}/exceptionLog/%d{yyyy-MM-dd}.log</fileNamePattern>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSSS} [marker: %marker] [requestUrl: %X{REQUESTURI}] [methodName: %X{MNAME}] [args: %X{ARGS}] [userId: %X{UID}] [ip: %X{CLIENTID}] [%thread] %logger - %msg%n %ex</pattern>
+    </encoder>
+  </appender>
+  <appender name="PERFORMANCELOG"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+      <evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+        <marker>PERFORMANCE</marker>
+      </evaluator>
+      <OnMismatch>DENY</OnMismatch>
+      <OnMatch>NEUTRAL</OnMatch>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${logRoot}/${logModule}/performanceLog/%d{yyyy-MM-dd}.log</fileNamePattern>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSSS} [marker: %marker] [requestUrl: %X{REQUESTURI}] [methodName: %X{MNAME}]  [args: %X{ARGS}]  [userId: %X{UID}] [ip: %X{CLIENTID}] [%thread] [elapseTime: %X{ELAPSETIME}] %logger - %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="JOBSCHEDULELOG"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+      <evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+        <marker>JOBSCHEDULE</marker>
+      </evaluator>
+      <OnMismatch>DENY</OnMismatch>
+      <OnMatch>NEUTRAL</OnMatch>
+    </filter>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${logRoot}/${logModule}/jobscheduleLog/%d{yyyy-MM-dd}.log</fileNamePattern>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSSS}  [marker: %marker]  [jobID: %X{JOBID}]  [jobStartTime: %X{JOBSTARTTIME}]  [jobRunTime: %X{JOBRUNTIME}] [jobRunResult: %X{JOBRUNRESULT}]   %logger - %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<fileNamePattern>${logRoot}/${logModule}/errorLog/%d{yyyy-MM-dd}.log</fileNamePattern>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logRoot}/${logModule}/errorLog/%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+			<maxHistory>5</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%msg [%file:%line] %n</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- mongo 操作调用日志 -->  
+  <appender name="MONGO_INVOKE" class="com.southgis.ibase.logstatistics.service.MongoDBAppender">  
+	   <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+				<evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+					<marker>INVOKE</marker>
+				</evaluator>
+				<OnMismatch>DENY</OnMismatch>
+				<OnMatch>NEUTRAL</OnMatch>
+			</filter>
+      <host>${mongo.host}</host>  
+      <port>${mongo.port}</port>  
+      <username>${mongo.username}</username>  
+      <password>${mongo.password}</password>  
+      <dbName>${mongo.database}</dbName>  
+      <collectionName>log_invoke</collectionName>  
+  </appender>
+ 
+ <!-- mongo 性能日志 -->  
+  <appender name="MONGO_PERFORMANCE" class="com.southgis.ibase.logstatistics.service.MongoDBAppender">  
+	   <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+				<evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+					<marker>PERFORMANCE</marker>
+				</evaluator>
+				<OnMismatch>DENY</OnMismatch>
+				<OnMatch>NEUTRAL</OnMatch>
+			</filter>
+      <host>${mongo.host}</host>  
+      <port>${mongo.port}</port>  
+      <username>${mongo.username}</username>  
+      <password>${mongo.password}</password>  
+      <dbName>${mongo.database}</dbName>  
+      <collectionName>log_performance</collectionName>  
+  </appender> 
+  
+  <!-- mongo 异常日志 -->  
+  <appender name="MONGO_EXCEPTION" class="com.southgis.ibase.logstatistics.service.MongoDBAppender">  
+	   <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+				<evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+					<marker>EXCEPTION</marker>
+				</evaluator>
+				<OnMismatch>DENY</OnMismatch>
+				<OnMatch>NEUTRAL</OnMatch>
+			</filter>
+      <host>${mongo.host}</host>  
+      <port>${mongo.port}</port>  
+      <username>${mongo.username}</username>  
+      <password>${mongo.password}</password>  
+      <dbName>${mongo.database}</dbName>  
+      <collectionName>log_exception</collectionName>  
+  </appender> 
+
+  <logger name="com.southgis.ibase.logstatistics.service" level="INFO">
+		<appender-ref ref="INVOKELOG" />
+		<appender-ref ref="EXCEPTIONLOG" />
+		<appender-ref ref="PERFORMANCELOG" />
+		<appender-ref ref="EXECSQLOG" />
+		<appender-ref ref="JOBSCHEDULELOG" />
+		<appender-ref ref="MONGO_INVOKE" /> 
+		<appender-ref ref="MONGO_PERFORMANCE" /> 
+		<appender-ref ref="MONGO_EXCEPTION" /> 
+  </logger>
+  <root level="INFO">
+		<appender-ref ref="FILE" />
+  </root>
+
+</configuration>

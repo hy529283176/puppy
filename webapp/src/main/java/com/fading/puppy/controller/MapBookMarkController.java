@@ -31,6 +31,11 @@ public class MapBookMarkController {
         return new ModelAndView("test");
     }
 
+    @RequestMapping(value = "/getIndex2")
+    public ModelAndView getIndex2(HttpServletRequest request){
+        return new ModelAndView("test2");
+    }
+
     /**
      * 保存或修改地图书签/标注
      */

@@ -19,10 +19,14 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/amazeui.min.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css" />
+    <%
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+    %>
 </head>
 
-<body>
-    <div class="dvcontent">
+<body style="padding: 0;margin: 0;overflow: auto;">
+    <div style="width: 100%;height: auto;padding: 0px 20px;">
         <div style="width: 100%;height: 200px;background-color: #b2e2fa;margin-top: 15px;overflow: hidden;">
             <label>书签名称：</label>
             <span>
@@ -56,12 +60,19 @@
         <hr style="border: solid 1px blue;">
         <div style="width: 100%;height: 300px;background-color: #b2e2fa;overflow: hidden;">
             <div id="biaoqian3" style="background-color: #c7c7c7;width: 300px;height: 100%;overflow: hidden;">
-                <form action="${pageContext.request.contextPath}/uploadSystem/conmonFilesUpload" method="post" enctype="multipart/form-data">
+                <form action="${pageContext.request.contextPath}/uploadSystem/conmonFilesUpload" method="post" enctype="multipart/form-data" >
                     <p> 选择文件:</p>
                     <input type="file" name="files">
                     <input type="submit" value="提交">
                 </form>
                 <span>${mes}</span>
+            </div>
+        </div>
+        <hr style="border: solid 1px blue;">
+        <div style="width: 100%;height: 200px;background-color: #b2e2fa;overflow: hidden;">
+            <div id="biaoqian4" style="background-color: #c7c7c7;width: 300px;height: 100%;overflow: hidden;">
+                <input type="button" id="btnexcel" onclick="exportExcel();" value="导出Excel">
+                <input type="button" id="btnword" onclick="exportWord();" value="导出Word">
             </div>
         </div>
     </div>
@@ -130,6 +141,46 @@
            }
            alert(text.value);
            window.location.href = '${pageContext.request.contextPath}/mapbookmark/exportText?text='+ text.value;
+       }
+       
+       function exportExcel() {
+           var data = {
+                   "sheetName": "图斑协调预演",
+                   "className": "LineOfControlConflict",
+                   "rowData": [
+                       {
+                           "landType": "生态控制线",
+                           "patternSpotNumber": "26",
+                           "floorSpace": "4568310.73m²"
+                       },
+                       {
+                           "landType": "城镇开发边界控制线",
+                           "patternSpotNumber": "10",
+                           "floorSpace": "18757458.85m²"
+                       }
+                   ]
+               }
+           ;
+           var json = JSON.stringify(data);
+           json = encodeURIComponent(json);
+           var url = "http://localhost:8080/webgisWebSerivce/maptool/exportExcelService";
+           var form = $("<form accept-charset=\"UTF-8\">");
+           form.attr('style', 'display:none');
+           form.attr('target', '');
+           form.attr('method', 'POST'); //请求方式
+           form.attr('action', url);//请求地址
+           var input1 = $('<input>');//将你请求的数据模仿成一个input表单
+           input1.attr('type', 'hidden');
+           input1.attr('name', 'jsonData');//该输入框的name
+           input1.attr('value',json);//该输入框的值
+           $('body').append(form);
+           form.append(input1);
+           form.submit();
+           form.remove();
+       }
+       
+       function exportWord() {
+           alert(1);
        }
     </script>
 </body>

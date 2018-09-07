@@ -256,6 +256,8 @@
 						<a href="${pageContext.request.contextPath}/doUserManager/updatePwdIndex" target="right"><li >修改密码</li></a>
 						<a href="${pageContext.request.contextPath}/doFormEngine/getIndex" target="right"><li >表单管理</li></a>
 						<a href="${pageContext.request.contextPath}/mapbookmark/getIndex" target="right"><li >测试</li></a>
+						<a href="${pageContext.request.contextPath}/mapbookmark/getIndex2" target="right"><li >测试2</li></a>
+
 					</ul>
 				</li>
 			</ul>

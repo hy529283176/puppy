@@ -180,7 +180,33 @@
        }
        
        function exportWord() {
-           alert(1);
+           var data = {
+                   "templatePath": "E:\\Company\\Jobforms\\001.docx",
+                   "tempFilePath": "E:\\Company\\Jobforms",
+                   "expotDataMap": {
+                       "name": "李明",
+                       "sex": "男",
+                       "age": "24",
+                       "hobby": "看剧",
+                       "birthday": "保密"
+                   }
+               };
+           var json = JSON.stringify(data);
+           json = encodeURIComponent(json);
+           var url = "http://localhost:8080/webgisWebSerivce/maptool/exportWordService";
+           var form = $("<form accept-charset=\"UTF-8\">");
+           form.attr('style', 'display:none');
+           form.attr('target', '');
+           form.attr('method', 'POST'); //请求方式
+           form.attr('action', url);//请求地址
+           var input1 = $('<input>');//将你请求的数据模仿成一个input表单
+           input1.attr('type', 'hidden');
+           input1.attr('name', 'jsonData');//该输入框的name
+           input1.attr('value',json);//该输入框的值
+           $('body').append(form);
+           form.append(input1);
+           form.submit();
+           form.remove();
        }
     </script>
 </body>

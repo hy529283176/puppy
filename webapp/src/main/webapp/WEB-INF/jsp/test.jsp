@@ -54,7 +54,7 @@
             <div id="biaoqian2" style="background-color: #c7c7c7;width: 300px;height: 100%;overflow: hidden;">
                 <textarea wrap="hard" rows="5" cols="5" id="zuobiaoshuchu" style="width: 300px;height: 150px;padding: 0;">
                 </textarea>
-                <input type="button" id="daochu" onclick="exportText();" value="导出坐标">&nbsp;&nbsp;&nbsp;<input type="button" id="shanchu" value="清楚结果">
+                <input type="button" id="daochu" onclick="exportText();" value="导出坐标">&nbsp;&nbsp;&nbsp;<input type="button" id="shanchu" value="清除结果">
             </div>
         </div>
         <hr style="border: solid 1px blue;">
@@ -72,7 +72,8 @@
         <div style="width: 100%;height: 200px;background-color: #b2e2fa;overflow: hidden;">
             <div id="biaoqian4" style="background-color: #c7c7c7;width: 300px;height: 100%;overflow: hidden;">
                 <input type="button" id="btnexcel" onclick="exportExcel();" value="导出Excel">
-                <input type="button" id="btnword" onclick="exportWord();" value="导出Word">
+                <input type="button" id="btnword" onclick="exportWord();" value="导出Word"><<br>>
+                <span>${message}</span>
             </div>
         </div>
     </div>
@@ -102,7 +103,7 @@
             var str = JSON.stringify(obj);
             $.ajax({
                 type: "POST",
-                url: "${pageContext.request.contextPath}/mapbookmark/saveUpdateMapBookMark1",
+                url: "http://localhost:8080/webgisWebSerivce/mapbookmark/saveUpdateMapBookMark1",
                 data: str,
                 dataType : 'json',
                 success: function(data){
@@ -121,7 +122,7 @@
             }
             $.ajax({
                 type:"get",
-                url:"${pageContext.request.contextPath}/mapbookmark/deleteMapBookMark",
+                url:"http://localhost:8080/webgisWebSerivce/mapbookmark/deleteMapBookMark",
                 data:{rid:rid},
                 dataType:'json',
                 success:function (data) {
@@ -139,8 +140,7 @@
            if(text.value == ""){
                return;
            }
-           alert(text.value);
-           window.location.href = '${pageContext.request.contextPath}/mapbookmark/exportText?text='+ text.value;
+           window.location.href = 'http://localhost:8080/webgisWebSerivce/maptool/exportText?text='+ text.value;
        }
        
        function exportExcel() {

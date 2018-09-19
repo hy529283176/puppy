@@ -72,7 +72,7 @@
         <div style="width: 100%;height: 200px;background-color: #b2e2fa;overflow: hidden;">
             <div id="biaoqian4" style="background-color: #c7c7c7;width: 300px;height: 100%;overflow: hidden;">
                 <input type="button" id="btnexcel" onclick="exportExcel();" value="导出Excel">
-                <input type="button" id="btnword" onclick="exportWord();" value="导出Word"><<br>>
+                <input type="button" id="btnword" onclick="exportWord();" value="导出Word">
                 <span>${message}</span>
             </div>
         </div>
@@ -145,18 +145,21 @@
        
        function exportExcel() {
            var data = {
-                   "sheetName": "图斑协调预演",
-                   "className": "LineOfControlConflict",
-                   "rowData": [
+                   "sheetName": "图层信息",
+                   "className": "CADCoverageName",
+                   "rowData":[  {
+                       "cadCoverageName": "0村庄填充",
+                       "factorCode": "64",
+                       "villageName": "新群村",
+                       "description": "",
+                       "siteArea": "0.08784848"
+                   },
                        {
-                           "landType": "生态控制线",
-                           "patternSpotNumber": "26",
-                           "floorSpace": "4568310.73m²"
-                       },
-                       {
-                           "landType": "城镇开发边界控制线",
-                           "patternSpotNumber": "10",
-                           "floorSpace": "18757458.85m²"
+                           "cadCoverageName": "0村庄填充",
+                           "factorCode": "65",
+                           "villageName": "新群村",
+                           "description": "",
+                           "siteArea": "0.02245009"
                        }
                    ]
                }
@@ -181,7 +184,7 @@
        
        function exportWord() {
            var data = {
-                   "templatePath": "E:\\Company\\Jobforms\\001.docx",
+                   "templatePath": "E:\\Company\\Jobforms\\002.docx",
                    "tempFilePath": "E:\\Company\\Jobforms",
                    "expotDataMap": {
                        "name": "李明",

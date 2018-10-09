@@ -54,7 +54,7 @@
             <div id="biaoqian2" style="background-color: #c7c7c7;width: 300px;height: 100%;overflow: hidden;">
                 <textarea wrap="hard" rows="5" cols="5" id="zuobiaoshuchu" style="width: 300px;height: 150px;padding: 0;">
                 </textarea>
-                <input type="button" id="daochu" onclick="exportText();" value="导出坐标">&nbsp;&nbsp;&nbsp;<input type="button" id="shanchu" value="清楚结果">
+                <input type="button" id="daochu" onclick="exportText();" value="导出坐标">&nbsp;&nbsp;&nbsp;<input type="button" id="shanchu" value="清除结果">
             </div>
         </div>
         <hr style="border: solid 1px blue;">
@@ -73,6 +73,7 @@
             <div id="biaoqian4" style="background-color: #c7c7c7;width: 300px;height: 100%;overflow: hidden;">
                 <input type="button" id="btnexcel" onclick="exportExcel();" value="导出Excel">
                 <input type="button" id="btnword" onclick="exportWord();" value="导出Word">
+                <span>${message}</span>
             </div>
         </div>
     </div>
@@ -102,7 +103,7 @@
             var str = JSON.stringify(obj);
             $.ajax({
                 type: "POST",
-                url: "${pageContext.request.contextPath}/mapbookmark/saveUpdateMapBookMark1",
+                url: "http://localhost:8080/webgisWebSerivce/mapbookmark/saveUpdateMapBookMark1",
                 data: str,
                 dataType : 'json',
                 success: function(data){
@@ -121,7 +122,7 @@
             }
             $.ajax({
                 type:"get",
-                url:"${pageContext.request.contextPath}/mapbookmark/deleteMapBookMark",
+                url:"http://localhost:8080/webgisWebSerivce/mapbookmark/deleteMapBookMark",
                 data:{rid:rid},
                 dataType:'json',
                 success:function (data) {
@@ -139,24 +140,26 @@
            if(text.value == ""){
                return;
            }
-           alert(text.value);
-           window.location.href = '${pageContext.request.contextPath}/mapbookmark/exportText?text='+ text.value;
+           window.location.href = 'http://localhost:8080/webgisWebService/maptool/exportText?text='+ text.value;
        }
        
        function exportExcel() {
            var data = {
-                   "sheetName": "图斑协调预演",
-                   "className": "LineOfControlConflict",
-                   "rowData": [
+                   "sheetName": "图层信息",
+                   "className": "CADCoverageName",
+                   "rowData":[  {
+                       "cadCoverageName": "0村庄填充",
+                       "factorCode": "64",
+                       "villageName": "新群村",
+                       "description": "",
+                       "siteArea": "0.08784848"
+                   },
                        {
-                           "landType": "生态控制线",
-                           "patternSpotNumber": "26",
-                           "floorSpace": "4568310.73m²"
-                       },
-                       {
-                           "landType": "城镇开发边界控制线",
-                           "patternSpotNumber": "10",
-                           "floorSpace": "18757458.85m²"
+                           "cadCoverageName": "0村庄填充",
+                           "factorCode": "65",
+                           "villageName": "新群村",
+                           "description": "",
+                           "siteArea": "0.02245009"
                        }
                    ]
                }
@@ -180,7 +183,33 @@
        }
        
        function exportWord() {
-           alert(1);
+           var data = {
+                   "templatePath": "E:\\Company\\Jobforms\\002.docx",
+                   "tempFilePath": "E:\\Company\\Jobforms",
+                   "expotDataMap": {
+                       "name": "李明",
+                       "sex": "男",
+                       "age": "24",
+                       "hobby": "看剧",
+                       "birthday": "保密"
+                   }
+               };
+           var json = JSON.stringify(data);
+           json = encodeURIComponent(json);
+           var url = "http://localhost:8080/webgisWebSerivce/maptool/exportWordService";
+           var form = $("<form accept-charset=\"UTF-8\">");
+           form.attr('style', 'display:none');
+           form.attr('target', '');
+           form.attr('method', 'POST'); //请求方式
+           form.attr('action', url);//请求地址
+           var input1 = $('<input>');//将你请求的数据模仿成一个input表单
+           input1.attr('type', 'hidden');
+           input1.attr('name', 'jsonData');//该输入框的name
+           input1.attr('value',json);//该输入框的值
+           $('body').append(form);
+           form.append(input1);
+           form.submit();
+           form.remove();
        }
     </script>
 </body>

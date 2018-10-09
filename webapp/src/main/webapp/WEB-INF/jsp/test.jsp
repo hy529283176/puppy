@@ -140,7 +140,7 @@
            if(text.value == ""){
                return;
            }
-           window.location.href = 'http://localhost:8080/webgisWebSerivce/maptool/exportText?text='+ text.value;
+           window.location.href = 'http://localhost:8080/webgisWebService/maptool/exportText?text='+ text.value;
        }
        
        function exportExcel() {

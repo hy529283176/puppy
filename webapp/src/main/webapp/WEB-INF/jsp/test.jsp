@@ -144,29 +144,28 @@
        }
        
        function exportExcel() {
-           var data = {
-                   "sheetName": "图层信息",
-                   "className": "CADCoverageName",
-                   "rowData":[  {
-                       "cadCoverageName": "0村庄填充",
-                       "factorCode": "64",
-                       "villageName": "新群村",
-                       "description": "",
-                       "siteArea": "0.08784848"
-                   },
-                       {
-                           "cadCoverageName": "0村庄填充",
-                           "factorCode": "65",
-                           "villageName": "新群村",
-                           "description": "",
-                           "siteArea": "0.02245009"
-                       }
-                   ]
-               }
-           ;
+           var data ={
+               "sheetName": "图斑协调预演",
+               "className": "LineOfControlConflict",
+               "columns": [
+                   {"title": "控制线名称",
+                       "key": "landType"
+                   },{"title": "个数",
+                       "key": "patternSpotNumber"
+                   },{"title": "占用面积",
+                       "key": "floorSpace"
+                   }],
+               "rowData": [{"landType": "生态控制线",
+                   "patternSpotNumber": "26",
+                   "floorSpace": "4568310.73m²"
+               },{
+                   "landType": "城镇开发边界控制线",
+                   "patternSpotNumber": "10",
+                   "floorSpace": "18757458.85m²"
+               }]};
            var json = JSON.stringify(data);
            json = encodeURIComponent(json);
-           var url = "http://localhost:8080/webgisWebSerivce/maptool/exportExcelService";
+           var url = "http://localhost:8080/webgisWebService/public/maptool/exportExcelService";
            var form = $("<form accept-charset=\"UTF-8\">");
            form.attr('style', 'display:none');
            form.attr('target', '');

@@ -135,12 +135,15 @@
        }
        
        function exportText() {
-           var text = document.getElementById("zuobiaoshuchu");
-           $("#zuobiaoshuchu").val();
-           if(text.value == ""){
+           var data = $("#zuobiaoshuchu").val();
+           if(data == ""){
                return;
            }
-           window.location.href = 'http://localhost:8080/webgisWebService/maptool/exportText?text='+ text.value;
+           var txtData = JSON.stringify(data);
+           txtData = encodeURIComponent(txtData);
+           var url = "http://localhost:8080/webgisWebService/public/maptool/exportTxt";
+           var params = {data:txtData};
+           usePostMethodExportFile(params,url);
        }
        
        function exportExcel() {
@@ -166,19 +169,8 @@
            var json = JSON.stringify(data);
            json = encodeURIComponent(json);
            var url = "http://localhost:8080/webgisWebService/public/maptool/exportExcelService";
-           var form = $("<form accept-charset=\"UTF-8\">");
-           form.attr('style', 'display:none');
-           form.attr('target', '');
-           form.attr('method', 'POST'); //请求方式
-           form.attr('action', url);//请求地址
-           var input1 = $('<input>');//将你请求的数据模仿成一个input表单
-           input1.attr('type', 'hidden');
-           input1.attr('name', 'jsonData');//该输入框的name
-           input1.attr('value',json);//该输入框的值
-           $('body').append(form);
-           form.append(input1);
-           form.submit();
-           form.remove();
+           var params = {jsonData:json};
+           usePostMethodExportFile(params,url);
        }
        
        function exportWord() {
@@ -196,20 +188,30 @@
            var json = JSON.stringify(data);
            json = encodeURIComponent(json);
            var url = "http://localhost:8080/webgisWebSerivce/maptool/exportWordService";
-           var form = $("<form accept-charset=\"UTF-8\">");
-           form.attr('style', 'display:none');
-           form.attr('target', '');
-           form.attr('method', 'POST'); //请求方式
-           form.attr('action', url);//请求地址
-           var input1 = $('<input>');//将你请求的数据模仿成一个input表单
-           input1.attr('type', 'hidden');
-           input1.attr('name', 'jsonData');//该输入框的name
-           input1.attr('value',json);//该输入框的值
-           $('body').append(form);
-           form.append(input1);
-           form.submit();
-           form.remove();
+           var params = {jsonData:json};
+           usePostMethodExportFile(params,url);
        }
+
+       //params是post请求需要的参数，url是请求url地址
+       function usePostMethodExportFile(params, url) {
+            var form = document.createElement("form");
+            form.style.display = 'none';
+            form.action = url;
+            form.method = "post";
+            form.acceptCharset = "UTF-8";
+            document.body.appendChild(form);
+
+            for(var key in params){
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = key;
+                input.value = params[key];
+                form.appendChild(input);
+            }
+
+            form.submit();
+            form.remove();
+        }
     </script>
 </body>
 

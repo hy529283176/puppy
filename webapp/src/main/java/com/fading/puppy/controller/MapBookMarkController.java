@@ -25,9 +25,7 @@ public class MapBookMarkController {
     private IMapBookMarkService mapBookMarkService;
 
     @RequestMapping(value = "/getIndex")
-    public ModelAndView getIndex(HttpServletRequest request){
-        List<MapBookMark> list = this.mapBookMarkService.getAllsByMarkType("0");
-        request.setAttribute("bookmarklist",list);
+    public ModelAndView getIndex(){
         return new ModelAndView("test");
     }
 

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="true"
+	monitoring="autodetect" dynamicConfig="true" name="puppyCacheManager">
+	
+	<diskStore path="F:\puppy\cache" />
+	
+	<!-- 使用组播方式同步（要求所有服务在同一网段内），
+	 timeToLive=0限制在同一个服务器;1是限制在同一个子网;32是限制在同一个网站;64是限制在同一个region;128是限制在同一个大洲;255是不限制
+	  hostName：主机名或者ip，用来接受或者发送信息的接口(不能去掉hostName属性，不然linux部署下存在同步失效的问题)-->
+	<cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+		properties="peerDiscovery=automatic, multicastGroupAddress=230.0.0.1,
+		multicastGroupPort=4446, timeToLive=255,hostName=localhost" />
+	<cacheManagerPeerListenerFactory
+		class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory" />
+	
+	<!-- 使用点对点方式同步（需要每个服务器有单独配置文件，用于配置要同步的服务器组），
+	 rmiUrls配置要同步的其它服务器地址及缓存容器
+	 -->
+	<!-- 
+	<cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+		properties="peerDiscovery=manual,rmiUrls=//192.168.0.111:40001/iBase2Cache|//192.168.0.113:40003/iBase2Cache" />
+	 -->
+	<!-- 本服务器信息（其它服务的rmiUrls中配置的信息与此保持一致才行） -->
+	<!-- 
+	<cacheManagerPeerListenerFactory
+		class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+		properties="hostName=192.168.0.112,port=40002,socketTimeoutMillis=2000" />
+	 -->
+	
+	<!-- 组播方式/点对点方式的缓存容器配置信息 -->
+	<defaultCache maxElementsInMemory="20000" eternal="true"
+		timeToIdleSeconds="30" timeToLiveSeconds="30" overflowToDisk="false"
+		diskPersistent="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="puppyCache" maxElementsOnDisk="20000"
+		maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="60"
+		timeToLiveSeconds="60" overflowToDisk="true" diskPersistent="true">
+		<!-- 设置用于缓存的同步策略的监听器 -->
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+			properties="replicateAsynchronously=true, replicatePuts=true,
+      replicatePutsViaCopy=true, replicateUpdates=true,
+      replicateUpdatesViaCopy=true, replicateRemovals=true,
+      asynchronousReplicationIntervalMillis=200" />
+		<!-- 缓存启动时的初始化 -->
+		<bootstrapCacheLoaderFactory
+			class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory" />
+	</cache>
+	
+	<!-- 新增一个不需要集群同步的私有缓存容器(非共享缓存容器) -->
+	<cache name="puppyPrivateCache" maxElementsOnDisk="20000"
+		maxElementsInMemory="2000" eternal="false" timeToIdleSeconds="60"
+		timeToLiveSeconds="60" overflowToDisk="true" diskPersistent="true">
+	</cache>
+	
+	<!-- Jgroups方式同步（提供基于TCP的单播/UDP的多播，对应RMI的手动配置和自动发现），
+	需要添加net.sf.ehcache:ehcache-jgroupsreplication依赖。
+	 -->
+	<!--
+	<cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory"
+		properties="connect=UDP(mcast_addr=224.1.1.1;mcast_port=45678;ip_ttl=32;mcast_send_buf_size=120000;mcast_recv_buf_size=80000):
+		   PING(timeout=2000;num_initial_members=2):
+		   ......"
+		propertySeparator="::" />
+	</cacheManagerPeerProviderFactory>
+	<cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory"
+		properties="connect=TCP(bind_port=4001):
+		   TCPPING(initial_hosts=192.168.8.150[4001],192.168.8.150[4002];port_range=10;timeout=3000;num_initial_members=3):
+		   ......"
+		propertySeparator="::">
+	</cacheManagerPeerProviderFactory>
+	-->
+	<!-- TCP单播/UDP多播方式的缓存容器配置信息 -->
+	<!-- 
+	<cache name="iBase2Cache" ......>
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+			properties="replicateAsynchronously=true,replicatePuts=true,replicateUpdates=true,..." />
+		<bootstrapCacheLoaderFactory
+			class="net.sf.ehcache.distribution.jgroups.JGroupsBootstrapCacheLoaderFactory"
+			properties="bootstrapAsynchronously=true">
+		</bootstrapCacheLoaderFactory>
+	</cache>
+	-->
+</ehcache>

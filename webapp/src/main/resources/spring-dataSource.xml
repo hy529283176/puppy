@@ -101,4 +101,6 @@
         <!--<aop:advisor pointcut-ref="allServiceMethod" advice-ref="txAdvice" />-->
     <!--</aop:config>-->
 
+    <bean id="cmsApplicationListener" class="com.fading.puppy.tools.JobForWXAccessTokenListener"/>
+
 </beans>

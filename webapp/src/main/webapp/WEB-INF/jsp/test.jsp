@@ -27,28 +27,6 @@
 
 <body style="padding: 0;margin: 0;overflow: auto;">
     <div style="width: 100%;height: auto;padding: 0px 20px;">
-        <div style="width: 100%;height: 200px;background-color: #b2e2fa;margin-top: 15px;overflow: hidden;">
-            <label>书签名称：</label>
-            <span>
-                <input type="text" id="shuqianname" name="shuqianname" value=""/>
-                <input type="hidden" name="" value=""/>
-                <input type="button" id="saveShuqian" onclick="SaveShuQian();" value="新增"/>
-            </span>
-            <div id="biaoqian" style="background-color: #c7c7c7;width: 300px;height: 100%;overflow: hidden;">
-                <table>
-                    <c:forEach items="${bookmarklist}" var="blist">
-                        <tr><td>${blist.name}</td><td><input type="button" name="deleteBookMark" value="删除" onclick="DeleteBookMark('${blist.rid}')"></td></tr>
-                    </c:forEach>
-                </table>
-            </div>
-        </div>
-        <hr style="border: solid 1px blue;">
-        <div style="width: 100%;height: 200px;background-color: #999999;overflow: hidden;">
-            <input type="button" id="saveBiaozhu" value="添加标注">
-            <div id="biaoqian1" style="background-color: #b2e2fa;width: 300px;height: 100%;overflow: hidden;">
-
-            </div>
-        </div>
         <hr style="border: solid 1px blue;">
         <div style="width: 100%;height: 200px;background-color: #b2e2fa;overflow: hidden;">
             <div id="biaoqian2" style="background-color: #c7c7c7;width: 300px;height: 100%;overflow: hidden;">
@@ -82,57 +60,6 @@
 <script src="${pageContext.request.contextPath}/js/_layout.js"></script>
 <script src="${pageContext.request.contextPath}/js/plugs/jquery.SuperSlide.source.js"></script>
     <script type="text/javascript">
-        function SaveShuQian(){
-            var shuqianname = document.getElementById("shuqianname");
-            var name = "";
-            if(shuqianname.value==""){
-                name = "无"
-            }else{
-                name = shuqianname.value;
-            }
-            var date = new Date();
-            var year = date.getFullYear();
-            var month = date.getMonth()+1;
-            var day = date.getDate();
-            var hours = date.getHours();
-            var minutes = date.getMinutes();
-            var second = date.getSeconds();
-            var createtime = year+"/"+month+"/"+day+" "+hours+":"+minutes+":"+second;
-            var obj = {rid:"",createTime:"2018-08-30",createUser:"李明",descript:"标签",extent:"{\"x\":\"20\",\"y\":\"20\"}",
-                    name:"jia",markType:"0"};
-            var str = JSON.stringify(obj);
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:8080/webgisWebSerivce/mapbookmark/saveUpdateMapBookMark1",
-                data: str,
-                dataType : 'json',
-                success: function(data){
-                    if(data.status=="ok"){
-                        alert("保存成功！");
-                    }
-                },
-                error: function(){
-                    alert("未知错误，请联系管理员或开发人员!");
-                }
-            });
-        }
-       function DeleteBookMark(rid){
-            if(rid == null || rid == ""){
-                return;
-            }
-            $.ajax({
-                type:"get",
-                url:"http://localhost:8080/webgisWebSerivce/mapbookmark/deleteMapBookMark",
-                data:{rid:rid},
-                dataType:'json',
-                success:function (data) {
-                    alert(1);
-                },
-                error: function(){
-                    alert("未知错误，请联系管理员或开发人员!");
-                }
-            });
-       }
        
        function exportText() {
            var data = $("#zuobiaoshuchu").val();
@@ -174,20 +101,323 @@
        }
        
        function exportWord() {
-           var data = {
-                   "templatePath": "E:\\Company\\Jobforms\\002.docx",
-                   "tempFilePath": "E:\\Company\\Jobforms",
-                   "expotDataMap": {
-                       "name": "李明",
-                       "sex": "男",
-                       "age": "24",
-                       "hobby": "看剧",
-                       "birthday": "保密"
+           var data =    {
+               "tempFilePath": "E:\\fzjc\\",
+               "templatePath": "E:\\wordmodel\\lianggui.docx",
+               "exportDataMap": {
+                   "JCDL": "建设用地",
+                   "JCSJ": "2015-11-18 11:13",
+                   "JCTC": "城市空间布局规划土地利用总体规划-用途分区",
+                   "JCMJ": "588419.74m2",
+                   "PIC_MAP1": {
+                       "data": [],
+                       "height": 200,
+                       "path": "E:\\wordmodel\\lgpic1.png",
+                       "width": 300
+                   },
+                   "PIC_MAP2":{
+                       "data": [],
+                       "height": 100,
+                       "path": "E:\\wordmodel\\lgpic2.jpg",
+                       "width": 50
+                   },
+                   "TB_FLJG": {
+                       "datas": [
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "两规均为建设用地"
+                                   },
+                                   {
+                                       "text": "60"
+                                   },
+                                   {
+                                       "text": "523,555.17"
+                                   },
+                                   {
+                                       "text": "88.98%"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "土规非建设用地，城规建设用地"
+                                   },
+                                   {
+                                       "text": "4"
+                                   },
+                                   {
+                                       "text": "64,523.2"
+                                   },
+                                   {
+                                       "text": "10.97%"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "土规建设用地，城规非建设用地"
+                                   },
+                                   {
+                                       "text": "1"
+                                   },
+                                   {
+                                       "text": "341.37"
+                                   },
+                                   {
+                                       "text": "0.06%"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "两规均为非建设用地"
+                                   },
+                                   {
+                                       "text": "0"
+                                   },
+                                   {
+                                       "text": "0"
+                                   },
+                                   {
+                                       "text": "0%"
+                                   }
+                               ]
+                           }
+                       ],
+                       "headers": {
+                           "rowData": [
+                               {
+                                   "text": "分类结果"
+                               },
+                               {
+                                   "text": "地块个数"
+                               },
+                               {
+                                   "text": "占地面积（平方米）"
+                               },
+                               {
+                                   "text": "面积占比"
+                               }
+                           ]
+                       }
+                   },
+                   "TB_LGJWJSYD":{
+                       "datas": [
+                           {
+                               "rowData": [
+                                   {
+                                       "text": ""
+                                   },
+                                   {
+                                       "text": "城规用地性质"
+                                   },
+                                   {
+                                       "text": "土规用途分区"
+                                   },
+                                   {
+                                       "text": "占地面积（平方米）"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "1"
+                                   },
+                                   {
+                                       "text": "C6_教育科研设计用地"
+                                   },
+                                   {
+                                       "text": "城镇用地区"
+                                   },
+                                   {
+                                       "text": "247996.30"
+                                   }
+                               ]
+                           }
+                       ],
+                       "headers": {
+                           "rowData": [
+                               {
+                                   "text": "两规均为建设用地"
+                               },
+                               {
+                                   "text": ""
+                               },
+                               {
+                                   "text": ""
+                               },
+                               {
+                                   "text": ""
+                               }
+                           ]
+                       }
+                   },
+                   "TB_TGFJSYD_CGJSYD":{
+                       "datas": [
+                           {
+                               "rowData": [
+                                   {
+                                       "text": ""
+                                   },
+                                   {
+                                       "text": "城规用地性质"
+                                   },
+                                   {
+                                       "text": "土规用途分区"
+                                   },
+                                   {
+                                       "text": "占地面积（平方米）"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "1"
+                                   },
+                                   {
+                                       "text": "C6_教育科研设计用地"
+                                   },
+                                   {
+                                       "text": "水域用地区"
+                                   },
+                                   {
+                                       "text": "51097.77"
+                                   }
+                               ]
+                           }
+                       ],
+                       "headers": {
+                           "rowData": [
+                               {
+                                   "text": "土规非建设用地，城规建设用地"
+                               },
+                               {
+                                   "text": ""
+                               },
+                               {
+                                   "text": ""
+                               },
+                               {
+                                   "text": ""
+                               }
+                           ]
+                       }
+                   },
+                   "TB_TGJSYD_CGFJSYD":{
+                       "datas": [
+                           {
+                               "rowData": [
+                                   {
+                                       "text": ""
+                                   },
+                                   {
+                                       "text": "城规用地性质"
+                                   },
+                                   {
+                                       "text": "土规用途分区"
+                                   },
+                                   {
+                                       "text": "占地面积（平方米）"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "1"
+                                   },
+                                   {
+                                       "text": "E1_水域"
+                                   },
+                                   {
+                                       "text": "城镇用地区"
+                                   },
+                                   {
+                                       "text": "341.37"
+                                   }
+                               ]
+                           }
+                       ],
+                       "headers": {
+                           "rowData": [
+                               {
+                                   "text": "土规建设用地，城规非建设用地"
+                               },
+                               {
+                                   "text": ""
+                               },
+                               {
+                                   "text": ""
+                               },
+                               {
+                                   "text": ""
+                               }
+                           ]
+                       }
+                   },
+                   "TB_LGJWFJSYD":{
+                       "datas": [
+                           {
+                               "rowData": [
+                                   {
+                                       "text": ""
+                                   },
+                                   {
+                                       "text": "城规用地性质"
+                                   },
+                                   {
+                                       "text": "土规用途分区"
+                                   },
+                                   {
+                                       "text": "占地面积（平方米）"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "1"
+                                   },
+                                   {
+                                       "text": "E1_水域"
+                                   },
+                                   {
+                                       "text": "城镇用地区"
+                                   },
+                                   {
+                                       "text": "341.37"
+                                   }
+                               ]
+                           }
+                       ],
+                       "headers": {
+                           "rowData": [
+                               {
+                                   "text": "两规均为非建设用地"
+                               },
+                               {
+                                   "text": ""
+                               },
+                               {
+                                   "text": ""
+                               },
+                               {
+                                   "text": ""
+                               }
+                           ]
+                       }
                    }
-               };
+               }
+           };
            var json = JSON.stringify(data);
            json = encodeURIComponent(json);
-           var url = "http://localhost:8080/webgisWebSerivce/maptool/exportWordService";
+           var url = "http://localhost:8080/webgisWebService/maptool/exportWordService";
            var params = {jsonData:json};
            usePostMethodExportFile(params,url);
        }

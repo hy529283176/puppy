@@ -101,89 +101,288 @@
        }
        
        function exportWord() {
-           var data =    {
-               "tempFilePath": "E:\\fzjc\\",
-               "templatePath": "E:\\wordmodel\\lianggui.docx",
+           var data =      {
+               "templatePath": "FZXZPGReport.docx",
                "exportDataMap": {
-                   "JCDL": "建设用地",
-                   "JCSJ": "2015-11-18 11:13",
-                   "JCTC": "城市空间布局规划土地利用总体规划-用途分区",
-                   "JCMJ": "588419.74m2",
-                   "PIC_MAP1": {
+                   "DKBH": "2157",
+                   "DKMJ": "48,715.4",
+                   "XMBH": "AQ201800108",
+                   "XMMC": "蓝宝石晶体工业项目",
+                   "YDLX": "一类工业用地",
+                   "YDMJ": "48,715.4",
+                   "PIC_MAP": {
                        "data": [],
-                       "height": 200,
-                       "path": "E:\\wordmodel\\lgpic1.png",
-                       "width": 300
+                       "height": 400,
+                       "path": "E:\\wordmodel\\dikuai.jpg",
+                       "width": 500
                    },
-                   "PIC_MAP2":{
-                       "data": [],
-                       "height": 100,
-                       "path": "E:\\wordmodel\\lgpic2.jpg",
-                       "width": 50
-                   },
-                   "TB_FLJG": {
+                   "SPZT": "",
+                   "TB_SPXX": {
                        "datas": [
                            {
                                "rowData": [
                                    {
-                                       "text": "两规均为建设用地"
+                                       "text": ""
                                    },
                                    {
-                                       "text": "60"
+                                       "text": "审批信息"
                                    },
                                    {
-                                       "text": "523,555.17"
+                                       "text": "审批数量"
                                    },
                                    {
-                                       "text": "88.98%"
+                                       "text": "审批面积（平方米）"
                                    }
                                ]
                            },
                            {
                                "rowData": [
                                    {
-                                       "text": "土规非建设用地，城规建设用地"
+                                       "text": "1"
                                    },
+                                   {
+                                       "text": "建设用地批准书"
+                                   },
+                                   {
+                                       "text": "0"
+                                   },
+                                   {
+                                       "text": "0m2"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "2"
+                                   },
+                                   {
+                                       "text": "建设用地批准书"
+                                   },
+                                   {
+                                       "text": "0"
+                                   },
+                                   {
+                                       "text": "0m2"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "3"
+                                   },
+                                   {
+                                       "text": "建设用地批准书"
+                                   },
+                                   {
+                                       "text": "0"
+                                   },
+                                   {
+                                       "text": "0m2"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
                                    {
                                        "text": "4"
                                    },
                                    {
-                                       "text": "64,523.2"
-                                   },
-                                   {
-                                       "text": "10.97%"
-                                   }
-                               ]
-                           },
-                           {
-                               "rowData": [
-                                   {
-                                       "text": "土规建设用地，城规非建设用地"
-                                   },
-                                   {
-                                       "text": "1"
-                                   },
-                                   {
-                                       "text": "341.37"
-                                   },
-                                   {
-                                       "text": "0.06%"
-                                   }
-                               ]
-                           },
-                           {
-                               "rowData": [
-                                   {
-                                       "text": "两规均为非建设用地"
+                                       "text": "建设用地选址意见书"
                                    },
                                    {
                                        "text": "0"
                                    },
                                    {
+                                       "text": "0m2"
+                                   }
+                               ]
+
+                           }
+                       ],
+                       "headers": {
+                           "rowData": [
+                               {
+                                   "text": "审批信息统计"
+                               },
+                               {
+                                   "text": ""
+                               },
+                               {
+                                   "text": ""
+                               },
+                               {
+                                   "text": ""
+                               }
+                           ],
+                           "mergeCellBool":true,
+                           "startCell":0,
+                           "endCell":3
+                       }
+                   },
+                   "TB_ZBDKXX":{
+                       "datas": [
+                           {
+                               "rowData": [
+                                   {
+                                       "text": ""
+                                   },
+                                   {
+                                       "text": "地块编码"
+                                   },
+                                   {
+                                       "text": "规划用地代码"
+                                   },
+                                   {
+                                       "text": "规划用地名称"
+                                   },
+                                   {
+                                       "text": "地块面积（平方米）"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "1"
+                                   },
+                                   {
+                                       "text": "2,138"
+                                   },
+                                   {
+                                       "text": "G1"
+                                   },
+                                   {
+                                       "text": "公园绿地"
+                                   },
+                                   {
+                                       "text": "9459.37 m2"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "1"
+                                   },
+                                   {
+                                       "text": "2,138"
+                                   },
+                                   {
+                                       "text": "G1"
+                                   },
+                                   {
+                                       "text": "公园绿地"
+                                   },
+                                   {
+                                       "text": "9459.37 m2"
+                                   }
+                               ]
+                           }
+                       ],
+                       "headers": {
+                           "rowData": [
+                               {
+                                   "text": "周边地块信息"
+                               },
+                               {
+                                   "text": ""
+                               },
+                               {
+                                   "text": ""
+                               },
+                               {
+                                   "text": ""
+                               },
+                               {
+                                   "text": ""
+                               }
+                           ],
+                           "mergeCellBool":true,
+                           "startCell":0,
+                           "endCell":4
+                       }
+                   },
+                   "TB_KZXJCJG":{
+                       "datas": [
+                           {
+                               "rowData": [
+                                   {
+                                       "text": ""
+                                   },
+                                   {
+                                       "text": "用地类型"
+                                   },
+                                   {
+                                       "text": "图斑个数"
+                                   },
+                                   {
+                                       "text": "占地面积（平方米）"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "1"
+                                   },
+                                   {
+                                       "text": "城市开发边界控制线"
+                                   },
+                                   {
+                                       "text": "1"
+                                   },
+                                   {
+                                       "text": "48715.38 m2"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "1"
+                                   },
+                                   {
+                                       "text": "城市开发边界控制线"
+                                   },
+                                   {
+                                       "text": "1"
+                                   },
+                                   {
+                                       "text": "48715.38 m2"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "2"
+                                   },
+                                   {
+                                       "text": "建设用地规模边界"
+                                   },
+                                   {
+                                       "text": "2"
+                                   },
+                                   {
+                                       "text": "97430.76 m2"
+                                   }
+                               ]
+                           },
+                           {
+                               "rowData": [
+                                   {
+                                       "text": "3"
+                                   },
+                                   {
+                                       "text": "生态保护红线"
+                                   },
+                                   {
                                        "text": "0"
                                    },
                                    {
-                                       "text": "0%"
+                                       "text": "0m2"
                                    }
                                ]
                            }
@@ -191,59 +390,7 @@
                        "headers": {
                            "rowData": [
                                {
-                                   "text": "分类结果"
-                               },
-                               {
-                                   "text": "地块个数"
-                               },
-                               {
-                                   "text": "占地面积（平方米）"
-                               },
-                               {
-                                   "text": "面积占比"
-                               }
-                           ]
-                       }
-                   },
-                   "TB_LGJWJSYD":{
-                       "datas": [
-                           {
-                               "rowData": [
-                                   {
-                                       "text": ""
-                                   },
-                                   {
-                                       "text": "城规用地性质"
-                                   },
-                                   {
-                                       "text": "土规用途分区"
-                                   },
-                                   {
-                                       "text": "占地面积（平方米）"
-                                   }
-                               ]
-                           },
-                           {
-                               "rowData": [
-                                   {
-                                       "text": "1"
-                                   },
-                                   {
-                                       "text": "C6_教育科研设计用地"
-                                   },
-                                   {
-                                       "text": "城镇用地区"
-                                   },
-                                   {
-                                       "text": "247996.30"
-                                   }
-                               ]
-                           }
-                       ],
-                       "headers": {
-                           "rowData": [
-                               {
-                                   "text": "两规均为建设用地"
+                                   "text": "控制线检测结果"
                                },
                                {
                                    "text": ""
@@ -254,170 +401,17 @@
                                {
                                    "text": ""
                                }
-                           ]
-                       }
-                   },
-                   "TB_TGFJSYD_CGJSYD":{
-                       "datas": [
-                           {
-                               "rowData": [
-                                   {
-                                       "text": ""
-                                   },
-                                   {
-                                       "text": "城规用地性质"
-                                   },
-                                   {
-                                       "text": "土规用途分区"
-                                   },
-                                   {
-                                       "text": "占地面积（平方米）"
-                                   }
-                               ]
-                           },
-                           {
-                               "rowData": [
-                                   {
-                                       "text": "1"
-                                   },
-                                   {
-                                       "text": "C6_教育科研设计用地"
-                                   },
-                                   {
-                                       "text": "水域用地区"
-                                   },
-                                   {
-                                       "text": "51097.77"
-                                   }
-                               ]
-                           }
-                       ],
-                       "headers": {
-                           "rowData": [
-                               {
-                                   "text": "土规非建设用地，城规建设用地"
-                               },
-                               {
-                                   "text": ""
-                               },
-                               {
-                                   "text": ""
-                               },
-                               {
-                                   "text": ""
-                               }
-                           ]
-                       }
-                   },
-                   "TB_TGJSYD_CGFJSYD":{
-                       "datas": [
-                           {
-                               "rowData": [
-                                   {
-                                       "text": ""
-                                   },
-                                   {
-                                       "text": "城规用地性质"
-                                   },
-                                   {
-                                       "text": "土规用途分区"
-                                   },
-                                   {
-                                       "text": "占地面积（平方米）"
-                                   }
-                               ]
-                           },
-                           {
-                               "rowData": [
-                                   {
-                                       "text": "1"
-                                   },
-                                   {
-                                       "text": "E1_水域"
-                                   },
-                                   {
-                                       "text": "城镇用地区"
-                                   },
-                                   {
-                                       "text": "341.37"
-                                   }
-                               ]
-                           }
-                       ],
-                       "headers": {
-                           "rowData": [
-                               {
-                                   "text": "土规建设用地，城规非建设用地"
-                               },
-                               {
-                                   "text": ""
-                               },
-                               {
-                                   "text": ""
-                               },
-                               {
-                                   "text": ""
-                               }
-                           ]
-                       }
-                   },
-                   "TB_LGJWFJSYD":{
-                       "datas": [
-                           {
-                               "rowData": [
-                                   {
-                                       "text": ""
-                                   },
-                                   {
-                                       "text": "城规用地性质"
-                                   },
-                                   {
-                                       "text": "土规用途分区"
-                                   },
-                                   {
-                                       "text": "占地面积（平方米）"
-                                   }
-                               ]
-                           },
-                           {
-                               "rowData": [
-                                   {
-                                       "text": "1"
-                                   },
-                                   {
-                                       "text": "E1_水域"
-                                   },
-                                   {
-                                       "text": "城镇用地区"
-                                   },
-                                   {
-                                       "text": "341.37"
-                                   }
-                               ]
-                           }
-                       ],
-                       "headers": {
-                           "rowData": [
-                               {
-                                   "text": "两规均为非建设用地"
-                               },
-                               {
-                                   "text": ""
-                               },
-                               {
-                                   "text": ""
-                               },
-                               {
-                                   "text": ""
-                               }
-                           ]
+                           ],
+                           "mergeCellBool":true,
+                           "startCell":0,
+                           "endCell":3
                        }
                    }
                }
            };
            var json = JSON.stringify(data);
            json = encodeURIComponent(json);
-           var url = "http://localhost:8080/webgisWebService/maptool/exportWordService";
+           var url = "http://localhost:8080/webgisWebService/public/maptool/exportWordService";
            var params = {jsonData:json};
            usePostMethodExportFile(params,url);
        }

@@ -143,73 +143,74 @@
 <script src="${pageContext.request.contextPath}/js/plugs/jquery.SuperSlide.source.js" type="text/javascript" ></script>
 <script src="${pageContext.request.contextPath}/js/jweixin-1.4.0.js"></script>
 <script type="text/javascript">
-    var appid = null;
-    var timestamp = null;
-    var nonceStr = null;
-    var signature = null;
-    var url = window.location.href.split('#')[0];
-
     $(document).ready(function(){
+        var aid = "";
+        var time = "";
+        var nonce = "";
+        var sign = "";
+        var url = window.location.href.split('#')[0];
+
         $.ajax({
             url:"${pageContext.request.contextPath}/wechatWebService/getWechatConfig?url="+url,
             type:'get',
             async:false,
             dataType:'json',
             success:function (data) {
-                appid = data.appId;
-                timestamp = data.timestamp;
-                nonceStr = data.nonceStr;
-                signature = data.signature;
+                aid = data.appId;
+                time = data.timestamp;
+                nonce = data.nonceStr;
+                sign = data.signature;
             }
+        });
+
+        wx.config({
+            debug: false,
+            appId: aid,
+            timestamp: time,
+            nonceStr: nonce,
+            signature: sign,
+            jsApiList: [
+                'checkJsApi',
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'onMenuShareQQ',
+                'onMenuShareWeibo',
+                'onMenuShareQZone',
+                'hideMenuItems',
+                'showMenuItems',
+                'hideAllNonBaseMenuItem',
+                'showAllNonBaseMenuItem',
+                'translateVoice',
+                'startRecord',
+                'stopRecord',
+                'onVoiceRecordEnd',
+                'playVoice',
+                'onVoicePlayEnd',
+                'pauseVoice',
+                'stopVoice',
+                'uploadVoice',
+                'downloadVoice',
+                'chooseImage',
+                'previewImage',
+                'uploadImage',
+                'downloadImage',
+                'getNetworkType',
+                'openLocation',
+                'getLocation',
+                'hideOptionMenu',
+                'showOptionMenu',
+                'closeWindow',
+                'scanQRCode',
+                'chooseWXPay',
+                'openProductSpecificView',
+                'addCard',
+                'chooseCard',
+                'openCard'
+            ]
         });
 
     });
 
-    wx.config({
-        debug: true,
-        appId: appid,
-        timestamp: timestamp,
-        nonceStr: nonceStr,
-        signature: signature,
-        jsApiList: [
-            'checkJsApi',
-            'onMenuShareTimeline',
-            'onMenuShareAppMessage',
-            'onMenuShareQQ',
-            'onMenuShareWeibo',
-            'onMenuShareQZone',
-            'hideMenuItems',
-            'showMenuItems',
-            'hideAllNonBaseMenuItem',
-            'showAllNonBaseMenuItem',
-            'translateVoice',
-            'startRecord',
-            'stopRecord',
-            'onVoiceRecordEnd',
-            'playVoice',
-            'onVoicePlayEnd',
-            'pauseVoice',
-            'stopVoice',
-            'uploadVoice',
-            'downloadVoice',
-            'chooseImage',
-            'previewImage',
-            'uploadImage',
-            'downloadImage',
-            'getNetworkType',
-            'openLocation',
-            'getLocation',
-            'hideOptionMenu',
-            'showOptionMenu',
-            'closeWindow',
-            'scanQRCode',
-            'chooseWXPay',
-            'openProductSpecificView',
-            'addCard',
-            'chooseCard',
-            'openCard'
-        ]
-    });
 </script>
 <script src="${pageContext.request.contextPath}/js/demo.js" type="text/javascript" ></script>
 <script src="${pageContext.request.contextPath}/js/zepto.min.js" type="text/javascript"></script>

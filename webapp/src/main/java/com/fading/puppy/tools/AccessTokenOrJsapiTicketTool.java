@@ -23,14 +23,24 @@ public class AccessTokenOrJsapiTicketTool {
      */
     static  {
         Properties prop = new Properties();
+        InputStream in = null;
         try {
-            InputStream in =  AccessTokenOrJsapiTicketTool.class.getClassLoader().getResourceAsStream("wechat.properties");
+            in =  AccessTokenOrJsapiTicketTool.class.getClassLoader().getResourceAsStream("wechat.properties");
             prop.load(in);
             appId = prop.getProperty(WechatConfigEnum.APPID.getName());
             appSecret = prop.getProperty(WechatConfigEnum.APPSECRET.getName());
             sc.setAttribute(WechatConfigEnum.APPID.getName(), appId);
+            in.close();
         } catch (IOException e) {
             log.info("execute initAndSetAccessToken {}", e.getMessage());
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -105,25 +115,38 @@ public class AccessTokenOrJsapiTicketTool {
      * @return 返回数据json对象
      * @throws Exception
      */
-    public static JSONObject getWXTokenOrTicket(String wxServiceUrl) throws Exception {
-        URL url = new URL(wxServiceUrl);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+    public static JSONObject getWXTokenOrTicket(String wxServiceUrl) {
+        InputStream inputStream = null;
+        try{
+            URL url = new URL(wxServiceUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-        connection.setRequestMethod("GET");
-        connection.setDoOutput(true);
-        connection.setDoInput(true);
-        connection.connect();
-
-        //获取返回的字符
-        InputStream inputStream = connection.getInputStream();
-        int size =inputStream.available();
-        byte[] bs =new byte[size];
-        inputStream.read(bs);
-        String message=new String(bs,"UTF-8");
-
-        //获取access_token
-        JSONObject jsonObject = JSONObject.fromObject(message);
-        return jsonObject;
+            connection.setRequestMethod("GET");
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
+            connection.connect();
+            //获取返回的字符
+            inputStream = connection.getInputStream();
+            int size =inputStream.available();
+            byte[] bs =new byte[size];
+            inputStream.read(bs);
+            String message=new String(bs,"UTF-8");
+            inputStream.close();
+            //获取access_token
+            JSONObject jsonObject = JSONObject.fromObject(message);
+            return jsonObject;
+        }catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
     }
 
 }

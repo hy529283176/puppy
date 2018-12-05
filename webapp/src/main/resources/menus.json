@@ -1,0 +1,29 @@
+{
+  "button": [
+    {
+      "type": "click",
+      "name": "今日萌宠",
+      "key": "V1001_TODAY_TUCAO"
+    },
+    {
+      "type": "view",
+      "name": "网上商城",
+      "url": "http://ketsq9.natappfree.cc/puppy/wechatWebService/index"
+    },
+    {
+      "name": "更多",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "搜索",
+          "url": "http://www.baidu.com/"
+        },
+        {
+          "type": "click",
+          "name": "赞赏",
+          "key": "v1002_DIANZAN"
+        }
+      ]
+    }
+  ]
+}

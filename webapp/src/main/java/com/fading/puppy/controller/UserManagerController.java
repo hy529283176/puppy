@@ -5,15 +5,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("doUserManager/")
+@RequestMapping("/doUserManager/")
 public class UserManagerController {
     @RequestMapping("getIndex")
     public ModelAndView getIndex(){
-        return new ModelAndView("user");
+        return new ModelAndView("jsp/user");
     }
 
     @RequestMapping("updatePwdIndex")
     public ModelAndView updatePwdIndex(){
-        return new ModelAndView("updatePwd");
+        return new ModelAndView("jsp/updatePwd");
     }
 }

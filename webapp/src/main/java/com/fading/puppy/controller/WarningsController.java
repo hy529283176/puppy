@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("doWaring/")
+@RequestMapping("/doWaring/")
 public class WarningsController {
     @RequestMapping("getIndex")
     public ModelAndView getIndex(){
-        return new ModelAndView("warning");
+        return new ModelAndView("jsp/warning");
     }
 }

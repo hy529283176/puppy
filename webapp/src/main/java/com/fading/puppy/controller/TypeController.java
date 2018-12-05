@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value = "doType/")
+@RequestMapping(value = "/doType/")
 public class TypeController {
 
     @RequestMapping(value = "getIndex")
     public ModelAndView getTypeView(){
 
-        return new ModelAndView("type");
+        return new ModelAndView("jsp/type");
     }
 }

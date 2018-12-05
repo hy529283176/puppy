@@ -27,28 +27,6 @@
 
 <body style="padding: 0;margin: 0;overflow: auto;">
     <div style="width: 100%;height: auto;padding: 0px 20px;">
-        <div style="width: 100%;height: 200px;background-color: #b2e2fa;margin-top: 15px;overflow: hidden;">
-            <label>书签名称：</label>
-            <span>
-                <input type="text" id="shuqianname" name="shuqianname" value=""/>
-                <input type="hidden" name="" value=""/>
-                <input type="button" id="saveShuqian" onclick="SaveShuQian();" value="新增"/>
-            </span>
-            <div id="biaoqian" style="background-color: #c7c7c7;width: 300px;height: 100%;overflow: hidden;">
-                <table>
-                    <c:forEach items="${bookmarklist}" var="blist">
-                        <tr><td>${blist.name}</td><td><input type="button" name="deleteBookMark" value="删除" onclick="DeleteBookMark('${blist.rid}')"></td></tr>
-                    </c:forEach>
-                </table>
-            </div>
-        </div>
-        <hr style="border: solid 1px blue;">
-        <div style="width: 100%;height: 200px;background-color: #999999;overflow: hidden;">
-            <input type="button" id="saveBiaozhu" value="添加标注">
-            <div id="biaoqian1" style="background-color: #b2e2fa;width: 300px;height: 100%;overflow: hidden;">
-
-            </div>
-        </div>
         <hr style="border: solid 1px blue;">
         <div style="width: 100%;height: 200px;background-color: #b2e2fa;overflow: hidden;">
             <div id="biaoqian2" style="background-color: #c7c7c7;width: 300px;height: 100%;overflow: hidden;">
@@ -82,135 +60,95 @@
 <script src="${pageContext.request.contextPath}/js/_layout.js"></script>
 <script src="${pageContext.request.contextPath}/js/plugs/jquery.SuperSlide.source.js"></script>
     <script type="text/javascript">
-        function SaveShuQian(){
-            var shuqianname = document.getElementById("shuqianname");
-            var name = "";
-            if(shuqianname.value==""){
-                name = "无"
-            }else{
-                name = shuqianname.value;
-            }
-            var date = new Date();
-            var year = date.getFullYear();
-            var month = date.getMonth()+1;
-            var day = date.getDate();
-            var hours = date.getHours();
-            var minutes = date.getMinutes();
-            var second = date.getSeconds();
-            var createtime = year+"/"+month+"/"+day+" "+hours+":"+minutes+":"+second;
-            var obj = {rid:"",createTime:"2018-08-30",createUser:"李明",descript:"标签",extent:"{\"x\":\"20\",\"y\":\"20\"}",
-                    name:"jia",markType:"0"};
-            var str = JSON.stringify(obj);
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:8080/webgisWebSerivce/mapbookmark/saveUpdateMapBookMark1",
-                data: str,
-                dataType : 'json',
-                success: function(data){
-                    if(data.status=="ok"){
-                        alert("保存成功！");
-                    }
-                },
-                error: function(){
-                    alert("未知错误，请联系管理员或开发人员!");
-                }
-            });
-        }
-       function DeleteBookMark(rid){
-            if(rid == null || rid == ""){
-                return;
-            }
-            $.ajax({
-                type:"get",
-                url:"http://localhost:8080/webgisWebSerivce/mapbookmark/deleteMapBookMark",
-                data:{rid:rid},
-                dataType:'json',
-                success:function (data) {
-                    alert(1);
-                },
-                error: function(){
-                    alert("未知错误，请联系管理员或开发人员!");
-                }
-            });
-       }
        
        function exportText() {
-           var text = document.getElementById("zuobiaoshuchu");
-           $("#zuobiaoshuchu").val();
-           if(text.value == ""){
+           var data = $("#zuobiaoshuchu").val();
+           if(data == ""){
                return;
            }
-           window.location.href = 'http://localhost:8080/webgisWebService/maptool/exportText?text='+ text.value;
+           var txtData = JSON.stringify(data);
+           txtData = encodeURIComponent(txtData);
+           var url = "http://localhost:8080/webgisWebService/public/maptool/exportTxt";
+           var params = {data:txtData};
+           usePostMethodExportFile(params,url);
        }
        
        function exportExcel() {
-           var data = {
-                   "sheetName": "图层信息",
-                   "className": "CADCoverageName",
-                   "rowData":[  {
-                       "cadCoverageName": "0村庄填充",
-                       "factorCode": "64",
-                       "villageName": "新群村",
-                       "description": "",
-                       "siteArea": "0.08784848"
-                   },
-                       {
-                           "cadCoverageName": "0村庄填充",
-                           "factorCode": "65",
-                           "villageName": "新群村",
-                           "description": "",
-                           "siteArea": "0.02245009"
-                       }
-                   ]
-               }
-           ;
+           var data ={
+               "sheetName": "图斑协调预演",
+               "className": "LineOfControlConflict",
+               "columns": [
+                   {"title": "控制线名称",
+                       "key": "landType"
+                   },{"title": "个数",
+                       "key": "patternSpotNumber"
+                   },{"title": "占用面积",
+                       "key": "floorSpace"
+                   }],
+               "rowData": [{"landType": "生态控制线",
+                   "patternSpotNumber": "26",
+                   "floorSpace": "4568310.73m²"
+               },{
+                   "landType": "城镇开发边界控制线",
+                   "patternSpotNumber": "10",
+                   "floorSpace": "18757458.85m²"
+               }]};
            var json = JSON.stringify(data);
            json = encodeURIComponent(json);
-           var url = "http://localhost:8080/webgisWebSerivce/maptool/exportExcelService";
-           var form = $("<form accept-charset=\"UTF-8\">");
-           form.attr('style', 'display:none');
-           form.attr('target', '');
-           form.attr('method', 'POST'); //请求方式
-           form.attr('action', url);//请求地址
-           var input1 = $('<input>');//将你请求的数据模仿成一个input表单
-           input1.attr('type', 'hidden');
-           input1.attr('name', 'jsonData');//该输入框的name
-           input1.attr('value',json);//该输入框的值
-           $('body').append(form);
-           form.append(input1);
-           form.submit();
-           form.remove();
+           var url = "http://localhost:8080/webgisWebService/public/maptool/exportExcelService";
+           var params = {jsonData:json};
+           usePostMethodExportFile(params,url);
        }
        
        function exportWord() {
-           var data = {
-                   "templatePath": "E:\\Company\\Jobforms\\002.docx",
-                   "tempFilePath": "E:\\Company\\Jobforms",
-                   "expotDataMap": {
-                       "name": "李明",
-                       "sex": "男",
-                       "age": "24",
-                       "hobby": "看剧",
-                       "birthday": "保密"
-                   }
-               };
+           var data =     {
+               "templatePath":"KZXJCReport.docx",
+               "exportDataMap":{"JCBH":"20180510091502",
+                   "XMMC":"1",
+                   "JSDW":"1",
+                   "LALB":"1",
+                   "JCSJ":"2018-12-07 09:15",
+                   "JCMJ":"1876373.9102㎡",
+                   "PIC_PICTURE1":{
+                   "data":[],"height":300,
+                       "path":"E:\\wordmodel\\pic01.jpg",
+                       "width":400
+                   },
+                   "TB_FLJG":"{" +
+                       "\"datas\":[" +
+                       "{\"rowData\":[{\"text\":\"序号\"}," +
+                       "{\"text\":\"控制线名称\"}," +
+                       "{\"text\":\"图斑个数\"}," +
+                       "{\"text\":\"占用面积(㎡)\"}" +
+                       "]}," +
+                       "{\"rowData\":[{\"text\":1},{\"text\":\"生态控制线\"},{\"text\":1},{\"text\":1087349.8}]},{\"rowData\":[{\"text\":2},{\"text\":\"城镇开发边界控制线\"},{\"text\":1},{\"text\":707872.95}]},{\"rowData\":[{\"text\":3},{\"text\":\"基本农田控制线\"},{\"text\":0},{\"text\":0}]},{\"rowData\":[{\"text\":4},{\"text\":\"产业区块控制线\"},{\"text\":1},{\"text\":789024.11}]}],\"headers\":{\"rowData\":[{\"text\":\"汇总信息\"},{\"text\":\"\"},{\"text\":\"\"},{\"text\":\"\"}],\"mergeCellBool\":true,\"startCell\":0,\"endCell\":3}}","TB_LGJWJSYD":"{\"datas\":[{\"rowData\":[{\"text\":\"序号\"},{\"text\":\"控制线名称\"},{\"text\":\"控制线代码\"},{\"text\":\"占用面积(㎡)\"}]},{\"rowData\":[{\"text\":1},{\"text\":\"建设用地增长边界控制线\"},{\"text\":\"L2\"},{\"text\":789024.11}]}],\"headers\":{\"rowData\":[{\"text\":\"产业区块控制线\"},{\"text\":\"\"},{\"text\":\"\"},{\"text\":\"\"}],\"mergeCellBool\":true,\"startCell\":0,\"endCell\":3}}","TB_TGFJSYD_CGJSYD":"{\"datas\":[{\"rowData\":[{\"text\":\"序号\"},{\"text\":\"控制线名称\"},{\"text\":\"控制线代码\"},{\"text\":\"占用面积(㎡)\"}]}],\"headers\":{\"rowData\":[{\"text\":\"基本农田控制线\"},{\"text\":\"\"},{\"text\":\"\"},{\"text\":\"\"}],\"mergeCellBool\":true,\"startCell\":0,\"endCell\":3}}","TB_TGJSYD_CGFJSYD":"{\"datas\":[{\"rowData\":[{\"text\":\"序号\"},{\"text\":\"控制线名称\"},{\"text\":\"控制线代码\"},{\"text\":\"占用面积(㎡)\"}]},{\"rowData\":[{\"text\":1},{\"text\":\"建设用地规模控制线\"},{\"text\":\"X1\"},{\"text\":707872.95}]}],\"headers\":{\"rowData\":[{\"text\":\"城镇开发边界控制线\"},{\"text\":\"\"},{\"text\":\"\"},{\"text\":\"\"}],\"mergeCellBool\":true,\"startCell\":0,\"endCell\":3}}","TB_LGJWFJSYD":"{\"datas\":[{\"rowData\":[{\"text\":\"序号\"},{\"text\":\"控制线名称\"},{\"text\":\"控制线代码\"},{\"text\":\"占用面积(㎡)\"}]},{\"rowData\":[{\"text\":1},{\"text\":\"生态控制线\"},{\"text\":\"L1\"},{\"text\":1087349.8}]}],\"headers\":{\"rowData\":[{\"text\":\"生态控制线\"},{\"text\":\"\"},{\"text\":\"\"},{\"text\":\"\"}],\"mergeCellBool\":true,\"startCell\":0,\"endCell\":3}}"}};
            var json = JSON.stringify(data);
            json = encodeURIComponent(json);
-           var url = "http://localhost:8080/webgisWebSerivce/maptool/exportWordService";
-           var form = $("<form accept-charset=\"UTF-8\">");
-           form.attr('style', 'display:none');
-           form.attr('target', '');
-           form.attr('method', 'POST'); //请求方式
-           form.attr('action', url);//请求地址
-           var input1 = $('<input>');//将你请求的数据模仿成一个input表单
-           input1.attr('type', 'hidden');
-           input1.attr('name', 'jsonData');//该输入框的name
-           input1.attr('value',json);//该输入框的值
-           $('body').append(form);
-           form.append(input1);
-           form.submit();
-           form.remove();
+           var url = "http://192.168.10.115:8083/webgisWebService/public/maptool/exportWordService";
+           var params = {jsonData:json};
+           usePostMethodExportFile(params,url);
        }
+
+       //params是post请求需要的参数，url是请求url地址
+       function usePostMethodExportFile(params, url) {
+            var form = document.createElement("form");
+            form.style.display = 'none';
+            form.action = url;
+            form.method = "post";
+            form.acceptCharset = "UTF-8";
+            document.body.appendChild(form);
+
+            for(var key in params){
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = key;
+                input.value = params[key];
+                form.appendChild(input);
+            }
+
+            form.submit();
+            form.remove();
+        }
     </script>
 </body>
 

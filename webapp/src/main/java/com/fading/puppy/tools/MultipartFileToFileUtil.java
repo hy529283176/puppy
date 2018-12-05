@@ -7,7 +7,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import java.io.File;
 import java.io.IOException;
 
-public class MultipartFileToFile {
+public class MultipartFileToFileUtil {
     /**
      * 把MultipartFile类型文件转换为一般的File类型文件
      * @param multipartFile MultipartFile类型文件参数

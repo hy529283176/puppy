@@ -25,15 +25,13 @@ public class MapBookMarkController {
     private IMapBookMarkService mapBookMarkService;
 
     @RequestMapping(value = "/getIndex")
-    public ModelAndView getIndex(HttpServletRequest request){
-        List<MapBookMark> list = this.mapBookMarkService.getAllsByMarkType("0");
-        request.setAttribute("bookmarklist",list);
-        return new ModelAndView("test");
+    public ModelAndView getIndex(){
+        return new ModelAndView("jsp/test");
     }
 
     @RequestMapping(value = "/getIndex2")
     public ModelAndView getIndex2(HttpServletRequest request){
-        return new ModelAndView("test2");
+        return new ModelAndView("jsp/test2");
     }
 
     /**

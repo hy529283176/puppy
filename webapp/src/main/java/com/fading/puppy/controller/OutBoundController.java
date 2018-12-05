@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("doOutBound/")
+@RequestMapping("/doOutBound/")
 public class OutBoundController {
     @RequestMapping("getIndex")
     public ModelAndView getIndex(){
-        return new ModelAndView("outbound");
+        return new ModelAndView("jsp/outbound");
     }
 }

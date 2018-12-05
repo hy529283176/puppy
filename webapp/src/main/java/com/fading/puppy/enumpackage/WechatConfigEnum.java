@@ -1,4 +1,4 @@
-package com.fading.puppy.tools;
+package com.fading.puppy.enumpackage;
 
 public enum WechatConfigEnum {
     ACCESSTOKEN("accessToken"), JSAPITICKE("jsApiTicket"), APPID("appId"), APPSECRET("appSecret");

@@ -1,10 +1,12 @@
-package com.fading.puppy.tools;
+package com.fading.puppy.listener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.fading.puppy.tools.AccessTokenOrJsapiTicketUtil;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+
 
 /**
  * 定时刷新accessToken,jsapi_ticket
@@ -21,7 +23,7 @@ public class JobForWXAccessTokenListener implements ApplicationListener<ContextR
                         /**
                          * 定时设置accessToken
                          */
-                        AccessTokenOrJsapiTicketTool.initAndSetAccessToken();
+                        AccessTokenOrJsapiTicketUtil.initAndSetAccessToken();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -29,7 +31,8 @@ public class JobForWXAccessTokenListener implements ApplicationListener<ContextR
             };
 
             ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-            service.scheduleAtFixedRate(runnable, 1, 7195, TimeUnit.SECONDS);
+            service.scheduleAtFixedRate(runnable, 1, 7170, TimeUnit.SECONDS);
         }
+
     }
 }

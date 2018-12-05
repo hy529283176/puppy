@@ -18,7 +18,7 @@ import org.apache.poi.ss.usermodel.DateUtil;
  * @author liuwielong@zhicall.com
  *
  */
-public class ExportExcelUtils {
+public class ExportExcelUtil {
 
 
 }

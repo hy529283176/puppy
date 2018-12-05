@@ -141,7 +141,7 @@
 <script src="${pageContext.request.contextPath}/js/plugs/Jqueryplugs.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/_layout.js" type="text/javascript" ></script>
 <script src="${pageContext.request.contextPath}/js/plugs/jquery.SuperSlide.source.js" type="text/javascript" ></script>
-<script src="${pageContext.request.contextPath}/js/jweixin-1.4.0.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         var aid = "";
@@ -149,7 +149,6 @@
         var nonce = "";
         var sign = "";
         var url = window.location.href.split('#')[0];
-
         $.ajax({
             url:"${pageContext.request.contextPath}/wechatWebService/getWechatConfig?url="+url,
             type:'get',
@@ -212,8 +211,8 @@
     });
 
 </script>
-<script src="${pageContext.request.contextPath}/js/demo.js" type="text/javascript" ></script>
 <script src="${pageContext.request.contextPath}/js/zepto.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/demo.js" type="text/javascript" ></script>
 </body>
 
 </html>

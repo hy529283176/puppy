@@ -101,6 +101,8 @@
         <!--<aop:advisor pointcut-ref="allServiceMethod" advice-ref="txAdvice" />-->
     <!--</aop:config>-->
 
-    <bean id="cmsApplicationListener" class="com.fading.puppy.tools.JobForWXAccessTokenListener"/>
+    <bean id="wxAccessTokenListener" class="com.fading.puppy.listener.JobForWXAccessTokenListener"/>
+
+    <bean id="wxMenusAdapter" class="com.fading.puppy.adapter.WXMenusAdapter" />
 
 </beans>

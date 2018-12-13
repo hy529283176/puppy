@@ -111,7 +111,7 @@
                    "JCMJ":"1876373.9102㎡",
                    "PIC_PICTURE1":{
                    "data":[],"height":300,
-                       "path":"E:\\wordmodel\\pic01.jpg",
+                       "path":"http://192.168.10.115:6080/arcgis/rest/directories/arcgisoutput/Utilities/PrintingTools_GPServer/_ags_0bf68108b0a94f49ba2bbdbe30a5cc9d.jpg",
                        "width":400
                    },
                    "TB_FLJG":"{" +
@@ -124,7 +124,7 @@
                        "{\"rowData\":[{\"text\":1},{\"text\":\"生态控制线\"},{\"text\":1},{\"text\":1087349.8}]},{\"rowData\":[{\"text\":2},{\"text\":\"城镇开发边界控制线\"},{\"text\":1},{\"text\":707872.95}]},{\"rowData\":[{\"text\":3},{\"text\":\"基本农田控制线\"},{\"text\":0},{\"text\":0}]},{\"rowData\":[{\"text\":4},{\"text\":\"产业区块控制线\"},{\"text\":1},{\"text\":789024.11}]}],\"headers\":{\"rowData\":[{\"text\":\"汇总信息\"},{\"text\":\"\"},{\"text\":\"\"},{\"text\":\"\"}],\"mergeCellBool\":true,\"startCell\":0,\"endCell\":3}}","TB_LGJWJSYD":"{\"datas\":[{\"rowData\":[{\"text\":\"序号\"},{\"text\":\"控制线名称\"},{\"text\":\"控制线代码\"},{\"text\":\"占用面积(㎡)\"}]},{\"rowData\":[{\"text\":1},{\"text\":\"建设用地增长边界控制线\"},{\"text\":\"L2\"},{\"text\":789024.11}]}],\"headers\":{\"rowData\":[{\"text\":\"产业区块控制线\"},{\"text\":\"\"},{\"text\":\"\"},{\"text\":\"\"}],\"mergeCellBool\":true,\"startCell\":0,\"endCell\":3}}","TB_TGFJSYD_CGJSYD":"{\"datas\":[{\"rowData\":[{\"text\":\"序号\"},{\"text\":\"控制线名称\"},{\"text\":\"控制线代码\"},{\"text\":\"占用面积(㎡)\"}]}],\"headers\":{\"rowData\":[{\"text\":\"基本农田控制线\"},{\"text\":\"\"},{\"text\":\"\"},{\"text\":\"\"}],\"mergeCellBool\":true,\"startCell\":0,\"endCell\":3}}","TB_TGJSYD_CGFJSYD":"{\"datas\":[{\"rowData\":[{\"text\":\"序号\"},{\"text\":\"控制线名称\"},{\"text\":\"控制线代码\"},{\"text\":\"占用面积(㎡)\"}]},{\"rowData\":[{\"text\":1},{\"text\":\"建设用地规模控制线\"},{\"text\":\"X1\"},{\"text\":707872.95}]}],\"headers\":{\"rowData\":[{\"text\":\"城镇开发边界控制线\"},{\"text\":\"\"},{\"text\":\"\"},{\"text\":\"\"}],\"mergeCellBool\":true,\"startCell\":0,\"endCell\":3}}","TB_LGJWFJSYD":"{\"datas\":[{\"rowData\":[{\"text\":\"序号\"},{\"text\":\"控制线名称\"},{\"text\":\"控制线代码\"},{\"text\":\"占用面积(㎡)\"}]},{\"rowData\":[{\"text\":1},{\"text\":\"生态控制线\"},{\"text\":\"L1\"},{\"text\":1087349.8}]}],\"headers\":{\"rowData\":[{\"text\":\"生态控制线\"},{\"text\":\"\"},{\"text\":\"\"},{\"text\":\"\"}],\"mergeCellBool\":true,\"startCell\":0,\"endCell\":3}}"}};
            var json = JSON.stringify(data);
            json = encodeURIComponent(json);
-           var url = "http://192.168.10.115:8083/webgisWebService/public/maptool/exportWordService";
+           var url = "http://localhost:8080/webgisWebService/maptool/exportWordService";
            var params = {jsonData:json};
            usePostMethodExportFile(params,url);
        }

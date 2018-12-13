@@ -16,90 +16,124 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js" ></script>
     <script type="text/javascript" src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js" ></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <script type="text/javascript">
-        var aid = "";
-        var time = "";
-        var nonce = "";
-        var sign = "";
+    <script>
+        var getAppId = "${appId}";
+        var getTimestamp = "";
+        var getNonceStr = "";
+        var getSignature = "";
         var url = window.location.href.split('#')[0];
+        var urll = url.split("?")[0];
         $.ajax({
-            url:"${pageContext.request.contextPath}/wechatWebService/getWechatConfig?url="+url,
+            url:"${pageContext.request.contextPath}/wechatWebService/getWechatConfig?url="+urll,
             type:'get',
-            async:false,
             dataType:'json',
             success:function (data) {
-                aid = data.appId;
-                time = data.timestamp;
-                nonce = data.nonceStr;
-                sign = data.signature;
+                console.log(data);
+                getTimestamp = data.timestamp;
+                getNonceStr = data.nonceStr;
+                getSignature = data.signature;
+                //通过config接口注入权限验证配置
+                wx.config({
+                    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    appId: getAppId, // 必填，公众号的唯一标识
+                    timestamp: getTimestamp, // 必填，生成签名的时间戳
+                    nonceStr: getNonceStr, // 必填，生成签名的随机串
+                    signature: getSignature, // 必填，签名
+                    jsApiList: [ // 必填，需要使用的JS接口列表
+                        'checkJsApi',
+                        'onMenuShareTimeline',
+                        'onMenuShareAppMessage',
+                        'onMenuShareQQ',
+                        'onMenuShareWeibo',
+                        'onMenuShareQZone',
+                        'hideMenuItems',
+                        'showMenuItems',
+                        'hideAllNonBaseMenuItem',
+                        'showAllNonBaseMenuItem',
+                        'translateVoice',
+                        'startRecord',
+                        'stopRecord',
+                        'onVoiceRecordEnd',
+                        'playVoice',
+                        'onVoicePlayEnd',
+                        'pauseVoice',
+                        'stopVoice',
+                        'uploadVoice',
+                        'downloadVoice',
+                        'chooseImage',
+                        'previewImage',
+                        'uploadImage',
+                        'downloadImage',
+                        'getNetworkType',
+                        'openLocation',
+                        'getLocation',
+                        'hideOptionMenu',
+                        'showOptionMenu',
+                        'closeWindow',
+                        'scanQRCode',
+                        'chooseWXPay',
+                        'openProductSpecificView',
+                        'addCard',
+                        'chooseCard',
+                        'openCard'
+                    ]
+                });
+                //通过ready接口处理成功验证
+                wx.ready(function() {
+                    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后
+                    // 1 判断当前版本是否支持指定 JS 接口，支持批量判断
+                    document.querySelector('#checkJsApi').onclick = function () {
+                        wx.checkJsApi({
+                            jsApiList: [
+                                'getNetworkType',
+                                'previewImage',
+                                'onMenuShareTimeline',
+                                'onMenuShareAppMessage',
+                                'onMenuShareQQ',
+                                'onMenuShareWeibo',
+                                'onMenuShareQZone',
+                                'hideMenuItems',
+                                'showMenuItems',
+                                'hideAllNonBaseMenuItem',
+                                'showAllNonBaseMenuItem',
+                                'translateVoice',
+                                'startRecord',
+                                'stopRecord',
+                                'onVoiceRecordEnd',
+                                'playVoice',
+                                'onVoicePlayEnd',
+                                'pauseVoice',
+                                'stopVoice',
+                                'uploadVoice',
+                                'downloadVoice',
+                                'chooseImage',
+                                'uploadImage',
+                                'downloadImage',
+                                'openLocation',
+                                'getLocation',
+                                'hideOptionMenu',
+                                'showOptionMenu',
+                                'closeWindow',
+                                'scanQRCode',
+                                'chooseWXPay',
+                                'openProductSpecificView',
+                                'addCard',
+                                'chooseCard',
+                                'openCard'
+                            ],
+                            success: function (res) {
+                                alert(JSON.stringify(res));
+                            }
+                        });
+                    };
+
+                });
             }
         });
 
-        //通过config接口注入权限验证配置
-        wx.config({
-            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            appId: aid, // 必填，公众号的唯一标识
-            timestamp: time, // 必填，生成签名的时间戳
-            nonceStr: nonce, // 必填，生成签名的随机串
-            signature: sign, // 必填，签名
-            jsApiList: [ // 必填，需要使用的JS接口列表
-                'checkJsApi',
-                'onMenuShareTimeline',
-                'onMenuShareAppMessage',
-                'onMenuShareQQ',
-                'onMenuShareWeibo',
-                'onMenuShareQZone',
-                'hideMenuItems',
-                'showMenuItems',
-                'hideAllNonBaseMenuItem',
-                'showAllNonBaseMenuItem',
-                'translateVoice',
-                'startRecord',
-                'stopRecord',
-                'onVoiceRecordEnd',
-                'playVoice',
-                'onVoicePlayEnd',
-                'pauseVoice',
-                'stopVoice',
-                'uploadVoice',
-                'downloadVoice',
-                'chooseImage',
-                'previewImage',
-                'uploadImage',
-                'downloadImage',
-                'getNetworkType',
-                'openLocation',
-                'getLocation',
-                'hideOptionMenu',
-                'showOptionMenu',
-                'closeWindow',
-                'scanQRCode',
-                'chooseWXPay',
-                'openProductSpecificView',
-                'addCard',
-                'chooseCard',
-                'openCard'
-            ]
-        });
 
-        //通过ready接口处理成功验证
-        wx.ready(function() {
-            // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后
-            // 1 判断当前版本是否支持指定 JS 接口，支持批量判断
-            document.querySelector('#checkJsApi').onclick = function () {
-                wx.checkJsApi({
-                    jsApiList: [
-                        'getNetworkType',
-                        'previewImage'
-                    ],
-                    success: function (res) {
-                        alert(JSON.stringify(res));
-                    }
-                });
-            };
-
-        });
     </script>
+
 </head>
 
 <body style="margin: 0;padding: 0;">
@@ -130,6 +164,43 @@
         <input type="button" id="checkJsApi" value="检查JS接口">
     </div>
 </div>
+
+<script>
+    var codeValue = getParam("code");
+    if (codeValue == null || codeValue === '') {
+        window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + window.getAppId + '&redirect_uri=' + encodeURIComponent(window.urll) + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
+    } else {
+        getOpenId(codeValue); //把code传给后台获取用户信息
+    }
+
+    function getOpenId(code) {
+        $.ajax({
+            url:"${pageContext.request.contextPath}/wechatWebService/getOpenId?code="+code,
+            type:'get',
+            dataType:'json',
+            success:function (data) {
+                console.log(data);
+                console.log("openid="+data.openId);
+            }
+        });
+    }
+
+    /**
+     * 获取指定的URL参数值
+     * URL:http://www.quwan.com/index?name=tyler
+     * 参数：paramName URL参数
+     * 调用方法:getParam("name")
+     * 返回值:tyler
+     */
+    function getParam(paramName) {
+        paramValue = "", isFound = !1;
+        if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) {
+            arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&"), i = 0;
+            while (i < arrSource.length && !isFound) arrSource[i].indexOf("=") > 0 && arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase() && (paramValue = arrSource[i].split("=")[1], isFound = !0), i++
+        }
+        return paramValue == "" && (paramValue = null), paramValue
+    }
+</script>
 
 </body>
 

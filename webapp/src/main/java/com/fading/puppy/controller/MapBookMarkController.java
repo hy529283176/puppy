@@ -2,6 +2,7 @@ package com.fading.puppy.controller;
 
 import com.fading.puppy.entity.MapBookMark;
 import com.fading.puppy.service.IMapBookMarkService;
+import com.fading.puppy.tools.AccessTokenOrJsapiTicketUtil;
 import com.fading.puppy.tools.ExportTextUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,9 @@ public class MapBookMarkController {
 
     @RequestMapping(value = "/getIndex2")
     public ModelAndView getIndex2(HttpServletRequest request){
-        return new ModelAndView("jsp/test2");
+        ModelAndView mov = new ModelAndView("jsp/test2");
+        mov.addObject("appId", AccessTokenOrJsapiTicketUtil.getAppId());
+        return mov;
     }
 
     /**

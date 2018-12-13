@@ -39,7 +39,13 @@ public class SignUtil {
         {
             e.printStackTrace();
         }
-
+        System.out.println("======== 加密后的数据 start ==========");
+        System.out.println("url = "+url);
+        System.out.println("ticket = "+jsapi_ticket);
+        System.out.println("nonce_str = "+nonce_str);
+        System.out.println("timestamp = "+timestamp);
+        System.out.println("signature = "+signature);
+        System.out.println("======== 加密后的数据 end   ==========");
         ret.put("url", url);
         ret.put("jsapi_ticket", jsapi_ticket);
         ret.put("nonceStr", nonce_str);

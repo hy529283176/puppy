@@ -172,24 +172,26 @@ public class AccessTokenOrJsapiTicketUtil {
         return jsapiTicket;
     }
 
-    public static String getOpenId(String code) {
+    public static JSONObject getOpenId(String code) {
         String url = " https://api.weixin.qq.com/sns/oauth2/access_token?appid=" +
                 getAppId() + "&secret=" +
                 getAppSecret() +
                 "&code=" + code + "&grant_type=authorization_code";
         JSONObject jsonObject = HttpUtil.doRequestByGet(url);
-        System.out.println("=========获取openId start=========");
-        System.out.println("access_token = "+jsonObject.getString("access_token"));
-        System.out.println("expires_in = "+jsonObject.getString("expires_in"));
-        System.out.println("refresh_token = "+jsonObject.getString("refresh_token"));
-        System.out.println("openid = "+jsonObject.getString("openid"));
-        System.out.println("scope = "+jsonObject.getString("scope"));
-        System.out.println("=========获取openId end  =========");
-
-        String openId = null;
-        if (jsonObject.size() > 2) {
-            openId = jsonObject.getString("openid");
+        if (jsonObject.size() == 2) {
+            System.out.println("=========获取openId start=========");
+            System.out.println("errcode = "+jsonObject.getString("errcode"));
+            System.out.println("errmsg = "+jsonObject.getString("errmsg"));
+            System.out.println("=========获取openId end  =========");
+        } else {
+            System.out.println("=========获取openId start=========");
+            System.out.println("access_token = "+jsonObject.getString("access_token"));
+            System.out.println("expires_in = "+jsonObject.getString("expires_in"));
+            System.out.println("refresh_token = "+jsonObject.getString("refresh_token"));
+            System.out.println("openid = "+jsonObject.getString("openid"));
+            System.out.println("scope = "+jsonObject.getString("scope"));
+            System.out.println("=========获取openId end  =========");
         }
-        return openId;
+        return jsonObject;
     }
 }

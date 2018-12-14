@@ -1,7 +1,6 @@
 package com.fading.puppy.controller;
 
 import com.fading.puppy.tools.AccessTokenOrJsapiTicketUtil;
-import com.fading.puppy.tools.ServletContextUtil;
 import com.fading.puppy.tools.SignUtil;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;

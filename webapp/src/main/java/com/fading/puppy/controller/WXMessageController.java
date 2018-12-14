@@ -1,7 +1,9 @@
 package com.fading.puppy.controller;
 
+import com.fading.puppy.enumpackage.WechatConfigEnum;
 import com.fading.puppy.tools.CheckServiceUtil;
 import com.fading.puppy.tools.MessageUtil;
+import com.fading.puppy.tools.ServletContextUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,11 +22,6 @@ import java.util.Map;
 @RequestMapping(value = "/wechat/messageService")
 public class WXMessageController {
 
-    /*
-     * 自定义token, 用作生成签名,从而验证安全性
-     * */
-    private static final String TOKEN = "puppy";
-
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public String checkService(HttpServletRequest request) {
@@ -40,7 +37,8 @@ public class WXMessageController {
          * 将token、timestamp、nonce三个参数进行字典序排序
          * 并拼接为一个字符串
          */
-        String sortStr = CheckServiceUtil.sort(TOKEN,timestamp,nonce);
+        String token = (String) ServletContextUtil.get().getAttribute(WechatConfigEnum.TOKEN.getName());
+        String sortStr = CheckServiceUtil.sort(token,timestamp,nonce);
         /**
          * 字符串进行shal加密
          */

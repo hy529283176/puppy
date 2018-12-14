@@ -14,6 +14,7 @@ public class AccessTokenOrJsapiTicketUtil {
     private static Logger log = LoggerFactory.getLogger(AccessTokenOrJsapiTicketUtil.class);
     private static String appId = null;
     private static String appSecret = null;
+    private static String messageToken = null;
     private static ServletContext sc = ServletContextUtil.get();
 
     /**
@@ -28,8 +29,10 @@ public class AccessTokenOrJsapiTicketUtil {
             prop.load(in);
             appId = prop.getProperty(WechatConfigEnum.APPID.getName());
             appSecret = prop.getProperty(WechatConfigEnum.APPSECRET.getName());
+            messageToken = prop.getProperty(WechatConfigEnum.TOKEN.getName());
             sc.setAttribute(WechatConfigEnum.APPID.getName(), appId);
             sc.setAttribute(WechatConfigEnum.APPSECRET.getName(), appSecret);
+            sc.setAttribute(WechatConfigEnum.TOKEN.getName(), messageToken);
             in.close();
         } catch (IOException e) {
             log.info("execute initAndSetAccessToken {}", e.getMessage());

@@ -14,6 +14,7 @@ public class AccessTokenOrJsapiTicketUtil {
     private static Logger log = LoggerFactory.getLogger(AccessTokenOrJsapiTicketUtil.class);
     private static String appId = null;
     private static String appSecret = null;
+    private static String messageToken = null;
     private static ServletContext sc = ServletContextUtil.get();
 
     /**
@@ -28,7 +29,10 @@ public class AccessTokenOrJsapiTicketUtil {
             prop.load(in);
             appId = prop.getProperty(WechatConfigEnum.APPID.getName());
             appSecret = prop.getProperty(WechatConfigEnum.APPSECRET.getName());
+            messageToken = prop.getProperty(WechatConfigEnum.TOKEN.getName());
             sc.setAttribute(WechatConfigEnum.APPID.getName(), appId);
+            sc.setAttribute(WechatConfigEnum.APPSECRET.getName(), appSecret);
+            sc.setAttribute(WechatConfigEnum.TOKEN.getName(), messageToken);
             in.close();
         } catch (IOException e) {
             log.info("execute initAndSetAccessToken {}", e.getMessage());
@@ -55,20 +59,22 @@ public class AccessTokenOrJsapiTicketUtil {
             /**
             * cache access_token
             */
+            System.out.println("================== 缓存accessToken start ===================");
             sc.removeAttribute(WechatConfigEnum.ACCESSTOKEN.getName());
             sc.setAttribute(WechatConfigEnum.ACCESSTOKEN.getName(), accessToken);
-            System.out.println("accessToken="+sc.getAttribute(WechatConfigEnum.ACCESSTOKEN.getName()).toString());
-            System.out.println("=====================================");
+            System.out.println("accessToken = "+sc.getAttribute(WechatConfigEnum.ACCESSTOKEN.getName()).toString());
+            System.out.println("================== 缓存accessToken end   ===================");
 
             /**
              * cache jsapi_ticket
             */
             String jsApiTicket = createJsapiTicket(accessToken);
             if(null != jsApiTicket) {
+                System.out.println("================== 缓存jsApiTicket start ===================");
                 sc.removeAttribute(WechatConfigEnum.JSAPITICKE.getName());
                 sc.setAttribute(WechatConfigEnum.JSAPITICKE.getName(), jsApiTicket);
-                System.out.println("ticket="+sc.getAttribute(WechatConfigEnum.JSAPITICKE.getName()).toString());
-                System.out.println("=====================================");
+                System.out.println("ticket = "+sc.getAttribute(WechatConfigEnum.JSAPITICKE.getName()).toString());
+                System.out.println("================== 缓存jsApiTicket end   ===================");
 
             }
             createMenus(accessToken);
@@ -82,32 +88,32 @@ public class AccessTokenOrJsapiTicketUtil {
     private static String createAccessToken(String appid, String appSecret) {
         String accessTokenUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="
                 + appid + "&secret=" + appSecret;
+        System.out.println("================= 获取accessToken start =====================");
         System.out.println("URL for getting accessToken accessTokenUrl="+accessTokenUrl);
-
         JSONObject jsonObject = HttpUtil.doRequestByGet(accessTokenUrl);
         String accessToken = jsonObject.getString("access_token");
         String expires_in = jsonObject.getString("expires_in");
-        System.out.println("accessToken="+accessToken);
-        System.out.println("expires_in="+expires_in);
-        System.out.println("======================================");
+        System.out.println("accessToken = "+accessToken);
+        System.out.println("expires_in = "+expires_in);
+        System.out.println("================== 获取accessToken end   ====================");
         return accessToken;
     }
 
     private static String createJsapiTicket(String accessToken) {
         String jsapiTicketUrl = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="+accessToken+"&type=jsapi";
 
+        System.out.println("================= 获取jsapiTicket start =====================");
         System.out.println("URL for getting ticket ticketUrl="+jsapiTicketUrl);
-
         JSONObject jsonObject = HttpUtil.doRequestByGet(jsapiTicketUrl);
         String jsapiTicket = jsonObject.getString("ticket");
         String errcode = jsonObject.getString("errcode");
         String errmsg = jsonObject.getString("errmsg");
         String expires_in = jsonObject.getString("expires_in");
-        System.out.println("ticket="+jsapiTicket);
-        System.out.println("errcode="+errcode);
-        System.out.println("errmsg="+errmsg);
-        System.out.println("expires_in="+expires_in);
-        System.out.println("======================================");
+        System.out.println("ticket = "+jsapiTicket);
+        System.out.println("errcode = "+errcode);
+        System.out.println("errmsg = "+errmsg);
+        System.out.println("expires_in = "+expires_in);
+        System.out.println("================= 获取jsapiTicket end   =====================");
         return jsapiTicket;
     }
 
@@ -116,9 +122,9 @@ public class AccessTokenOrJsapiTicketUtil {
      * @param accessToken
      */
     private static void createMenus(String accessToken) {
-        System.out.println("创建微信菜单....");
+        System.out.println("=============== 创建微信菜单 start =================");
         if (accessToken  == null || accessToken.isEmpty()) {
-            System.out.println("创建失败！");
+            System.out.println("创建失败");
         } else {
             try {
                 String url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token="+accessToken;
@@ -127,14 +133,14 @@ public class AccessTokenOrJsapiTicketUtil {
                 JSONObject jsonObject = HttpUtil.doRequestByPost(url,jsonMenus);
                 String errcode = jsonObject.getString("errcode");
                 String errmsg = jsonObject.getString("errmsg");
-                System.out.println(errcode);
-                System.out.println(errmsg);
+                System.out.println("errcode = "+errcode);
+                System.out.println("errmsg = "+errmsg);
                 if ("0".equals(errcode)) {
-                    System.out.println("创建成功！");
+                    System.out.println("创建成功");
                 } else {
-                    System.out.println("创建失败！");
+                    System.out.println("创建失败");
                 }
-                System.out.println("======================================");
+                System.out.println("=============== 创建微信菜单 end   =================");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -159,9 +165,36 @@ public class AccessTokenOrJsapiTicketUtil {
         return appId;
     }
 
+    public static String getAppSecret(){
+        String appSecret = (String) ServletContextUtil.get().getAttribute(WechatConfigEnum.APPSECRET.getName());
+        return appSecret;
+    }
+
     public static String getJsapiTicket(){
         String jsapiTicket = (String) ServletContextUtil.get().getAttribute(WechatConfigEnum.JSAPITICKE.getName());
         return jsapiTicket;
     }
 
+    public static JSONObject getOpenId(String code) {
+        String url = " https://api.weixin.qq.com/sns/oauth2/access_token?appid=" +
+                getAppId() + "&secret=" +
+                getAppSecret() +
+                "&code=" + code + "&grant_type=authorization_code";
+        JSONObject jsonObject = HttpUtil.doRequestByGet(url);
+        if (jsonObject.size() == 2) {
+            System.out.println("=========获取openId start=========");
+            System.out.println("errcode = "+jsonObject.getString("errcode"));
+            System.out.println("errmsg = "+jsonObject.getString("errmsg"));
+            System.out.println("=========获取openId end  =========");
+        } else {
+            System.out.println("=========获取openId start=========");
+            System.out.println("access_token = "+jsonObject.getString("access_token"));
+            System.out.println("expires_in = "+jsonObject.getString("expires_in"));
+            System.out.println("refresh_token = "+jsonObject.getString("refresh_token"));
+            System.out.println("openid = "+jsonObject.getString("openid"));
+            System.out.println("scope = "+jsonObject.getString("scope"));
+            System.out.println("=========获取openId end  =========");
+        }
+        return jsonObject;
+    }
 }

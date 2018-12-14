@@ -8,7 +8,7 @@
     {
       "type": "view",
       "name": "网上商城",
-      "url": "http://ketsq9.natappfree.cc/puppy/wechatWebService/index"
+      "url": "http://ucy285.natappfree.cc/puppy/wechatWebService/index"
     },
     {
       "name": "更多",
@@ -17,6 +17,16 @@
           "type": "view",
           "name": "搜索",
           "url": "http://www.baidu.com/"
+        },
+        {
+          "type":"view",
+          "name":"静默授权",
+          "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx18a4957f1867e310&redirect_uri=http%3A%2F%2Fucy285.natappfree.cc%2Fpuppy%2FwechatWebService%2Findex&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
+        },
+        {
+          "type":"view",
+          "name":"非静默授权",
+          "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx18a4957f1867e310&redirect_uri=http%3A%2F%2Fucy285.natappfree.cc%2Fpuppy%2FwechatWebService%2Findex&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect"
         },
         {
           "type": "click",

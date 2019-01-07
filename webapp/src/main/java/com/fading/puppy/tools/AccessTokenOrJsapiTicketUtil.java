@@ -121,7 +121,7 @@ public class AccessTokenOrJsapiTicketUtil {
      * 创建菜单
      * @param accessToken
      */
-    private static void createMenus(String accessToken) {
+    public static void createMenus(String accessToken) {
         System.out.println("=============== 创建微信菜单 start =================");
         if (accessToken  == null || accessToken.isEmpty()) {
             System.out.println("创建失败");

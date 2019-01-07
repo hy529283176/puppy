@@ -63,6 +63,7 @@
             url:"${pageContext.request.contextPath}/wechatWebService/getOpenId?code="+code,
             type:'get',
             dataType:'json',
+            contentType:'',
             success:function (data) {
                 console.log(data);
             }

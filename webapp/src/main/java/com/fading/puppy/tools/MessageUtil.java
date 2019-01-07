@@ -66,15 +66,31 @@ public class MessageUtil {
      * 根据消息类型 构造返回消息
      */
     public static String buildXml(Map<String,String> map) {
-        String result;
+        //返回结果
+        String result = null;
+        //消息类型
         String msgType = map.get("MsgType");
+        //关注者id
+        String fromUserName = map.get("FromUserName");
+        // 开发者微信号
+        String toUserName = map.get("ToUserName");
         System.out.println("MsgType:" + msgType);
+
         if(msgType.toUpperCase().equals("TEXT")){
             result = buildTextMessage(map, "puppy的house, 请问亲想要点啥?");
-        }else{
-            String fromUserName = map.get("FromUserName");
-            // 开发者微信号
-            String toUserName = map.get("ToUserName");
+        } else if ("EVENT".equals(msgType.toUpperCase())) {
+            String event = map.get("Event");
+            String eventKey = map.get("EventKey");
+            if ("unsubscribe".equals(event)) {
+                System.out.println(fromUserName + "用户取消关注");
+            } else if ("subscribe".equals(event)) {
+                result = buildTextMessage(map, "感谢你的关注");
+            } else if ("V1001_todayCutePet".equals(eventKey)) {
+                result = buildTextMessage(map, "拉布拉多");
+            } else if ("v1002_DIANZAN".equals(eventKey)) {
+                result = buildTextMessage(map, "我们会再接再厉的！");
+            }
+        } else {
             result = String
                     .format(
                             "<xml>" +

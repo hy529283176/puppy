@@ -109,6 +109,11 @@
                 <version>${spring.jpa.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-commons</artifactId>
+                <version>1.13.8.RELEASE</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context-support</artifactId>
                 <version>${spring.version}</version>
@@ -250,6 +255,16 @@
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
             <!-- 另一个json解释类 -->
             <dependency>
                 <groupId>org.json</groupId>
@@ -324,6 +339,19 @@
                 <artifactId>lombok</artifactId>
                 <version>1.16.16</version>
                 <scope>provided</scope>
+            </dependency>
+
+            <!-- swagger2 核心依赖 -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>2.6.1</version>
+            </dependency>
+            <!-- swagger-ui 为项目提供api展示及测试的界面 -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>2.6.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

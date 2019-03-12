@@ -19,7 +19,6 @@
 
     <!-- 配置controller扫描包 -->
     <context:component-scan base-package="com.fading.puppy.controller" />
-    <context:component-scan base-package="springfox"/>
     <mvc:annotation-driven />
     <mvc:default-servlet-handler/>
     <!-- swagger静态资源 -->
